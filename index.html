@@ -345,32 +345,17 @@
 
       
         
-          
-            <h3 id="Tcpcopy-辅助服务器"><a href="#Tcpcopy-辅助服务器" class="headerlink" title="Tcpcopy 辅助服务器:"></a>Tcpcopy 辅助服务器:</h3><ul>
+          <h3 id="Tcpcopy-辅助服务器"><a href="#Tcpcopy-辅助服务器" class="headerlink" title="Tcpcopy 辅助服务器:"></a>Tcpcopy 辅助服务器:</h3><ul>
 <li>安装Intercept(需要root权限)<br>  git clone git://github.com/session-replay-tools/intercept.git<br>  yum -y install gcc gcc-c++<br>  yum install  libpcap-devel<br>  cd /usr/local/intercept/sbin</li>
 <li><p>开启Intercept<br>  sudo ./intercept -i eth0 -l intercept.log -P /var/run/intercept.pid -F ‘tcp and src port 80’ -d<br>  参数说明：<br>  -i 制定监听的网卡<br>  -l 日志<br>  -P PID保存路径<br>  -F 拦截过滤规则<br>  -p 设置监听端口，默认36525，tcpcopy连接辅助服务器时使用</p>
 <p>  查看现网服务器已连接到本地端口<br>  ss -an |grep 36524      171-&gt;local</p>
-</li>
-</ul>
-<h3 id="生产Nginx服务器安装Tcpcopy"><a href="#生产Nginx服务器安装Tcpcopy" class="headerlink" title="生产Nginx服务器安装Tcpcopy:"></a>生产Nginx服务器安装Tcpcopy:</h3><ul>
-<li>下载Tcpcopy<br>  git clone git://github.com/session-replay-tools/tcpcopy.git</li>
-<li><p>安装(需要root权限)<br>  ./configure<br>  编译参数：可以不设置，默认安装在/usr/local/tcpcopy/sbin</p>
-<pre><code>--prefix=PATH                      set installation prefix
---sbin-path=PATH                   set tcpcopy binary pathname
---conf-path=PATH                   set plugin.conf pathname
---pid-path=PATH                    set tcpcopy.pid pathname
---builddir=DIR                     set build directory
-</code></pre><p>  make<br>  make install</p>
-</li>
-<li>开启Tcpcopy 导流，需要root权限，辅助服务器已经开启<br>  /usr/local/tcpcopy/sbin<br>  sudo ./tcpcopy -x 80-192.168.143.77:80 -s 192.168.143.45 -c 18.18.18.x -d -C 4 -l tcpcopy.log  -P /var/run/tcpcopy.pid<br>  参数说明：<br>  -x 导流80 端口的数据流到 192.168.143.77:80<br>  -c 61.135.250.x,61.135.251.x   修改流量来源为制定网段，多个网段用逗号隔开<br>  -s 10.120.12.161:36525,10.120.12.161:36525  指定辅助服务器和端口，默认端口36525<br>  -f 1 开启多个tcpcopy实例时使用，f参数的值必须是不同，达到多倍流量复制效果，单个不用设置</li>
-<li>查看是否成功连接到辅助服务器<br>  查看tcpcopy.log<br>  ss -an|grep 192.168.143.45<br>  tcpdump 查看是否有流量导向测试服务器<br>  sudo tcpdump -i eth0 host 192.168.143.77 and port 80</li>
-</ul>
-<h4 id="新机房服务器："><a href="#新机房服务器：" class="headerlink" title="新机房服务器："></a>新机房服务器：</h4><ul>
-<li>添加路由信息（需要root权限）<br>  把tcpcopy -c 参数里面的ip地址或者网段全部添加到路由表里面，转换到辅助服务器<br>  sudo route add -net 18.18.18.0 netmask 255.255.255.0 gw 192.168.143.45</li>
-<li>查看添加成功<br>  sudo route del -net 18.18.18.0 netmask 255.255.255.0<br>  route<br>  # ss -an |head<br>  tcpdump 查看是否有流量从修改的请求源到达测试服务器<br>  tcpdump port 80 and src net 18.18.18.0/24</li>
-</ul>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/23/tcpcopy笔记/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

@@ -97,7 +97,7 @@
 <meta property="og:description" content="Tcpcopy 辅助服务器:
 安装Intercept(需要root权限)  git clone git://github.com/session-replay-tools/intercept.git  yum -y install gcc gcc-c++  yum install  libpcap-devel  cd /usr/local/intercept/sbin
 开启Intercept  s">
-<meta property="og:updated_time" content="2017-03-23T11:14:29.669Z">
+<meta property="og:updated_time" content="2017-03-23T11:15:56.462Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tcpcopy笔记">
 <meta name="twitter:description" content="Tcpcopy 辅助服务器:
@@ -353,9 +353,8 @@
 <li>安装Intercept(需要root权限)<br>  git clone git://github.com/session-replay-tools/intercept.git<br>  yum -y install gcc gcc-c++<br>  yum install  libpcap-devel<br>  cd /usr/local/intercept/sbin</li>
 <li><p>开启Intercept<br>  sudo ./intercept -i eth0 -l intercept.log -P /var/run/intercept.pid -F ‘tcp and src port 80’ -d<br>  参数说明：<br>  -i 制定监听的网卡<br>  -l 日志<br>  -P PID保存路径<br>  -F 拦截过滤规则<br>  -p 设置监听端口，默认36525，tcpcopy连接辅助服务器时使用</p>
 <p>  查看现网服务器已连接到本地端口<br>  ss -an |grep 36524      171-&gt;local</p>
-</li>
-</ul>
-<h3 id="生产Nginx服务器安装Tcpcopy"><a href="#生产Nginx服务器安装Tcpcopy" class="headerlink" title="生产Nginx服务器安装Tcpcopy:"></a>生产Nginx服务器安装Tcpcopy:</h3><ul>
+<a id="more"></a>
+<h3 id="生产Nginx服务器安装Tcpcopy"><a href="#生产Nginx服务器安装Tcpcopy" class="headerlink" title="生产Nginx服务器安装Tcpcopy:"></a>生产Nginx服务器安装Tcpcopy:</h3></li>
 <li>下载Tcpcopy<br>  git clone git://github.com/session-replay-tools/tcpcopy.git</li>
 <li><p>安装(需要root权限)<br>  ./configure<br>  编译参数：可以不设置，默认安装在/usr/local/tcpcopy/sbin</p>
 <pre><code>--prefix=PATH                      set installation prefix
