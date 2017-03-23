@@ -93,7 +93,7 @@
 <meta property="og:url" content="http://chuanblog91.com/2017/03/23/app自动化编译及持续集成（二）/index.html">
 <meta property="og:site_name" content="Chuan's Blog">
 <meta property="og:description" content="ios打包及部署命令12345sudo xcode-select --switch /Applications/Xcode.app/Contents/Developerxcodebuild archive -workspace $&amp;#123;WORKSPACE&amp;#125;/xxxx/xxxx.xcworkspace -scheme xxxx -archivePath $&amp;#123;WORKSPAC">
-<meta property="og:updated_time" content="2017-03-23T10:53:34.884Z">
+<meta property="og:updated_time" content="2017-03-23T10:54:31.693Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="app自动化编译及持续集成（二）">
 <meta name="twitter:description" content="ios打包及部署命令12345sudo xcode-select --switch /Applications/Xcode.app/Contents/Developerxcodebuild archive -workspace $&amp;#123;WORKSPACE&amp;#125;/xxxx/xxxx.xcworkspace -scheme xxxx -archivePath $&amp;#123;WORKSPAC">
@@ -350,11 +350,12 @@
 <li>在工程根目录下新建一个ouputIPA文件夹</li>
 <li>对xccharive进行代码签名和打包，生成对应的ipa文件，名称为xxxx_buildnumber，<br>其中buildnumber为构建编号，以区分每一次构建的包</li>
 <li>把ipa文件拷贝到outIPA下，并重命名为xxxx.ipa</li>
-<li>把xxxx.ipa上传（可将这一步抽出，单独建立一个任务）</li>
-</ul>
+<li><p>把xxxx.ipa上传（可将这一步抽出，单独建立一个任务）</p>
+<a id="more"></a>
 <h3 id="Android打包及部署命令"><a href="#Android打包及部署命令" class="headerlink" title="Android打包及部署命令"></a>Android打包及部署命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> xxxx</div><div class="line"><span class="variable">$&#123;WORKSPACE&#125;</span>/../../common_shell/dir.sh <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/app/apk_backup</div><div class="line"><span class="built_in">echo</span> <span class="string">"ARCHIVE_TYPE"</span>= <span class="variable">$&#123;ARCHIVE_TYPE&#125;</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$&#123;ARCHIVE_TYPE&#125;</span>"</span> == <span class="string">"1"</span> ]; <span class="keyword">then</span></div><div class="line">./gradlew clean</div><div class="line">./gradlew assAAAADefult000000Release --stacktrace</div><div class="line">\cp <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/app/build/outputs/apk/AAAAA_release.apk <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/app/apk_backupAAAA_release_<span class="variable">$&#123;BUILD_NUMBER&#125;</span>.apk</div><div class="line"></div><div class="line">./gradlew clean</div><div class="line">./gradlew assxxxxRelease --stacktrace</div><div class="line">\cp <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/app/build/outputs/apk/xxxx_release.apk <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/app/apk_backup/xxxx_release_<span class="variable">$&#123;BUILD_NUMBER&#125;</span>.apk</div><div class="line"></div><div class="line"><span class="keyword">else</span></div><div class="line">./gradlew clean</div><div class="line">./gradlew assAAAAADefult000000Tice --stacktrace</div><div class="line">\cp <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/app/build/outputs/apk/app-AAAAA-defult000000-tice.apk <span class="variable">$&#123;WORKSPACE&#125;</span>/juanpi/app/apk_backup/AAAAA_tice_<span class="variable">$&#123;BUILD_NUMBER&#125;</span>.apk</div><div class="line"></div><div class="line">./gradlew clean</div><div class="line">./gradlew assxxxxDefult000000Tice --stacktrace</div><div class="line">\cp <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/app/build/outputs/apk/app-xxxx-defult000000-tice.apk <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/app/apk_backup/xxxx_tice_<span class="variable">$&#123;BUILD_NUMBER&#125;</span>.apk</div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure>
-<ul>
-<li>切换到xxxx目录下，这是安卓的主工程目录</li>
+</li>
+<li><p>切换到xxxx目录下，这是安卓的主工程目录</p>
+</li>
 <li>在xxxx/app目录下新建一个apk_backup文件夹</li>
 <li>清除之前打包生成的文件</li>
 <li>打包xxxx代码，生成xxxxDefault00000Tice.apk文件</li>
