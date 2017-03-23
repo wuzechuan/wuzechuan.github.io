@@ -101,7 +101,7 @@
 每天都有很多重复性的工作，比如打包，由人工来完成占用开发时间且单调无聊。交给机器来做，把人释放出来，去做更有意义的工作。
 开发中的代码需要尽早的测试，以发现问题，特别是主流程上的问题。
 已经发布的版本需要实时监控，发现问">
-<meta property="og:updated_time" content="2017-03-23T09:51:10.464Z">
+<meta property="og:updated_time" content="2017-03-23T10:28:15.029Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="app自动化编译及持续集成（一）">
 <meta name="twitter:description" content="什么是持续集成？持续集成指的是，频繁地（一天多次）将代码集成到主干，每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽早地发现集成错误。
@@ -359,7 +359,8 @@
 <h3 id="为什么要做持续集成？"><a href="#为什么要做持续集成？" class="headerlink" title="为什么要做持续集成？"></a>为什么要做持续集成？</h3><ul>
 <li>每天都有很多重复性的工作，比如打包，由人工来完成占用开发时间且单调无聊。交给机器来做，把人释放出来，去做更有意义的工作。</li>
 <li>开发中的代码需要尽早的测试，以发现问题，特别是主流程上的问题。</li>
-<li>已经发布的版本需要实时监控，发现问题及时通知。<h3 id="主要工具"><a href="#主要工具" class="headerlink" title="主要工具"></a>主要工具</h3></li>
+<li>已经发布的版本需要实时监控，发现问题及时通知。<a id="more"></a>
+<h3 id="主要工具"><a href="#主要工具" class="headerlink" title="主要工具"></a>主要工具</h3></li>
 <li>Jenkins<ul>
 <li>Jenkins是Java 写的一个持续集成工具，可以持续监控代码变化，并调用外部组件实现相关功能。</li>
 <li>Gitlab插件，为了从gitlab仓库拉取代码，我们使用了Gitlab插件，该插件需要在系统设置中配置好host地址和ssh鉴权用的密钥、帐号等，然后在各个任务中再进行相应配置。</li>

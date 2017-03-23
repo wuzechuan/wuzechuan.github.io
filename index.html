@@ -345,54 +345,18 @@
 
       
         
-          
-            <h3 id="什么是持续集成？"><a href="#什么是持续集成？" class="headerlink" title="什么是持续集成？"></a>什么是持续集成？</h3><p>持续集成指的是，频繁地（一天多次）将代码集成到主干，每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽早地发现集成错误。</p>
+          <h3 id="什么是持续集成？"><a href="#什么是持续集成？" class="headerlink" title="什么是持续集成？"></a>什么是持续集成？</h3><p>持续集成指的是，频繁地（一天多次）将代码集成到主干，每次集成都通过自动化的构建（包括编译，发布，自动化测试）来验证，从而尽早地发现集成错误。</p>
 <h3 id="为什么要做持续集成？"><a href="#为什么要做持续集成？" class="headerlink" title="为什么要做持续集成？"></a>为什么要做持续集成？</h3><ul>
 <li>每天都有很多重复性的工作，比如打包，由人工来完成占用开发时间且单调无聊。交给机器来做，把人释放出来，去做更有意义的工作。</li>
 <li>开发中的代码需要尽早的测试，以发现问题，特别是主流程上的问题。</li>
-<li>已经发布的版本需要实时监控，发现问题及时通知。<h3 id="主要工具"><a href="#主要工具" class="headerlink" title="主要工具"></a>主要工具</h3></li>
-<li>Jenkins<ul>
-<li>Jenkins是Java 写的一个持续集成工具，可以持续监控代码变化，并调用外部组件实现相关功能。</li>
-<li>Gitlab插件，为了从gitlab仓库拉取代码，我们使用了Gitlab插件，该插件需要在系统设置中配置好host地址和ssh鉴权用的密钥、帐号等，然后在各个任务中再进行相应配置。</li>
-<li>multipleSCMs插件，适用于多仓库构建。</li>
-</ul>
-</li>
-<li>Xcodebuild<ul>
-<li>Xcodebuild是iOS平台上的构建工具，有单独命令行和Xcode插件两种形式，需要依赖Xcode。类似工具还有xcrun，xctools。</li>
-</ul>
-</li>
-<li>Gradle<ul>
-<li>Gradle是基于JVM的构建工具，可以打包Android的apk，本身不依赖于Android SDK，但我们的gradle脚本中需要用到Android SDK。</li>
-</ul>
-</li>
-<li>Xcode7/Xcode8<ul>
-<li>Xcode7用于UI自动化测试，Xcode8用于自动化编译ipa</li>
-</ul>
-</li>
-<li>Android Studio<ul>
-<li>对应SDK版本为21(Android5.0)</li>
-</ul>
-</li>
-</ul>
-<h3 id="注意！"><a href="#注意！" class="headerlink" title="注意！"></a>注意！</h3><ul>
-<li>系统权限<ul>
-<li>由于Jenkins与管理员不在同一个帐号组内，为了避免因权限问题无法操作对应文件，将源代码、测试脚本、打包工具和对应的配置文件都设为了全部用户可读写。</li>
-</ul>
-</li>
-</ul>
-<h3 id="Jenkins仓库配置"><a href="#Jenkins仓库配置" class="headerlink" title="Jenkins仓库配置"></a>Jenkins仓库配置</h3><ul>
-<li>ios仓库配置<ul>
-<li>iOS juanpi的代码只有一个工程，只需要配置一个仓库，即xxx.git，分支选择develop（提测时为对应版本的release分支）</li>
-</ul>
-</li>
-<li>Android仓库配置<ul>
-<li>假如Android 的代码有多个工程，需要配置多个仓库，其中xxxx.git为主工程，依赖于其他几个仓库， 为了保持代码的一致性，我们用了jenkins的multipleSCMs这个插件，注意要设置代码checkout到子目录，否则不同仓库的代码会相互覆盖，比如Local subdirectory for repo : test，则代码会checkout到test这个子目录下。</li>
-</ul>
-</li>
-</ul>
-<h3 id="构建触发器"><a href="#构建触发器" class="headerlink" title="构建触发器"></a>构建触发器</h3><p>通过Poll SCM对话框里设置构建触发的定时器，比如”H/30 <em> </em> <em> </em>“，表示每半小时检查一次代码。</p>
-
-          
+<li>已经发布的版本需要实时监控，发现问题及时通知。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/23/app自动化编译及持续集成（一）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -532,12 +496,14 @@
 
       
         
-          
-            <h3 id="新建标签"><a href="#新建标签" class="headerlink" title="新建标签"></a>新建标签</h3><p>hexo new page tags<br>确认站点配置文件里有tag_dir: tags<br>确认主题配置文件里有tags: /tags<br>编辑站点的source/tags/index.md，添加<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">title: tags</div><div class="line">date: 2015-10-20 06:49:50</div><div class="line"><span class="built_in">type</span>: <span class="string">"tags"</span></div><div class="line">comments: <span class="literal">false</span></div></pre></td></tr></table></figure></p>
-<h3 id="新建分类"><a href="#新建分类" class="headerlink" title="新建分类"></a>新建分类</h3><p>hexo new page categories<br>确认站点配置文件里有category_dir: categories<br>确认主题配置文件里有categories: /categories<br>编辑站点的source/categories/index.md，添加<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">title: categories</div><div class="line">date: 2015-10-20 06:49:50</div><div class="line"><span class="built_in">type</span>: <span class="string">"categories"</span></div><div class="line">comments: <span class="literal">false</span></div></pre></td></tr></table></figure></p>
-<h3 id="更换主题"><a href="#更换主题" class="headerlink" title="更换主题"></a>更换主题</h3><p>在站点配置文件”_config.yml”中 找到 theme 字段，并将其值更改为 对应主题名称<br>注意：更好主题后，需要执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ hexo clean</div><div class="line">$ hexo g</div><div class="line">$ hexo d -g</div></pre></td></tr></table></figure></p>
-
-          
+          <h3 id="新建标签"><a href="#新建标签" class="headerlink" title="新建标签"></a>新建标签</h3><p>hexo new page tags<br>确认站点配置文件里有tag_dir: tags<br>确认主题配置文件里有tags: /tags<br>编辑站点的source/tags/index.md，添加<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">title: tags</div><div class="line">date: 2015-10-20 06:49:50</div><div class="line"><span class="built_in">type</span>: <span class="string">"tags"</span></div><div class="line">comments: <span class="literal">false</span></div></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/23/hexo心得/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -677,38 +643,20 @@
 
       
         
-          
-            <h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ul>
+          <h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ul>
 <li>github账号，建立与github用户名一致的仓库；</li>
 <li>本机需安装Node.js，Git；</li>
 </ul>
 <h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><p>安装前先介绍几个hexo常用的命令,#后面为注释<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ hexo g <span class="comment">#完整命令为hexo generate，用于生成静态文件</span></div><div class="line">$ hexo s <span class="comment">#完整命令为hexo server，用于启动服务器，主要用来本地预览</span></div><div class="line">$ hexo d <span class="comment">#完整命令为hexo deploy，用于将本地文件发布到github上</span></div></pre></td></tr></table></figure></p>
 <h4 id="npm-安装hexo包"><a href="#npm-安装hexo包" class="headerlink" title="npm 安装hexo包"></a>npm 安装hexo包</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-cli -g</div></pre></td></tr></table></figure>
 <h4 id="创建一个空文件夹作为博客容器后，进行初始化"><a href="#创建一个空文件夹作为博客容器后，进行初始化" class="headerlink" title="创建一个空文件夹作为博客容器后，进行初始化"></a>创建一个空文件夹作为博客容器后，进行初始化</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo init</div></pre></td></tr></table></figure>
-<h4 id="安装hexo依赖包"><a href="#安装hexo依赖包" class="headerlink" title="安装hexo依赖包"></a>安装hexo依赖包</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install</div></pre></td></tr></table></figure>
-<h4 id="本地查看博客"><a href="#本地查看博客" class="headerlink" title="本地查看博客"></a>本地查看博客</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ hexo g</div><div class="line">$ hexo s</div></pre></td></tr></table></figure>
-<ul>
-<li>如果出现”ERROR Deployer not found : github” 的问题，安装hexo的git包，再启动服务<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-deployer-git --save</div><div class="line">$ hexo g</div><div class="line">$ hexo d</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>然后用浏览器访问<a href="http://localhost:4000/，此时，你应该看到了一个漂亮的博客了。" target="_blank" rel="external">http://localhost:4000/，此时，你应该看到了一个漂亮的博客了。</a></p>
-<h3 id="部署博客到github上"><a href="#部署博客到github上" class="headerlink" title="部署博客到github上"></a>部署博客到github上</h3><h4 id="编辑博客根目录下”-config-yml-“，根据自己的需要填写title名后，其他默认，一直到”deploy”部分，添加以下内容（注意：hexo的配置文件中任何-“-”后面都是带一个空格的）："><a href="#编辑博客根目录下”-config-yml-“，根据自己的需要填写title名后，其他默认，一直到”deploy”部分，添加以下内容（注意：hexo的配置文件中任何-“-”后面都是带一个空格的）：" class="headerlink" title="编辑博客根目录下”_config.yml “，根据自己的需要填写title名后，其他默认，一直到”deploy”部分，添加以下内容（注意：hexo的配置文件中任何 “:”后面都是带一个空格的）："></a>编辑博客根目录下”_config.yml “，根据自己的需要填写title名后，其他默认，一直到”deploy”部分，添加以下内容（注意：hexo的配置文件中任何 “:”后面都是带一个空格的）：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy: </div><div class="line">  <span class="built_in">type</span>: git</div><div class="line">  repository: *.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
-<h4 id="编辑完配置文件后，执行"><a href="#编辑完配置文件后，执行" class="headerlink" title="编辑完配置文件后，执行"></a>编辑完配置文件后，执行</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ hexo g</div><div class="line">$ hexo d -g</div></pre></td></tr></table></figure>
-<p>将博客推送并发布到github上，在浏览器访问*.io.git 即可看到自己的博客了</p>
-<h3 id="发表一篇博客"><a href="#发表一篇博客" class="headerlink" title="发表一篇博客"></a>发表一篇博客</h3><ul>
-<li>在命令行里输入:<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo n <span class="string">"文章名"</span></div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>即可在”source_post”目录中找到自己的博客文章，博客主体内容通过markdown来编辑，编辑完毕后再执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ hexo g</div><div class="line">$ hexo d -g</div></pre></td></tr></table></figure></p>
-<p>在站点上即可看到你的新文章了~~~</p>
-<h3 id="绑定个性域名"><a href="#绑定个性域名" class="headerlink" title="绑定个性域名"></a>绑定个性域名</h3><ul>
-<li>购买域名，一般都可以免费域名解析；</li>
-<li>在博客目录下”source”创建一个名为”CNAME”文件输入你的域名，不带http前缀；</li>
-<li>推送发布到github上；</li>
-<li>域名解析中将github的公网地址添加记录；</li>
-</ul>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/23/使用hexo搭建个人博客/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
