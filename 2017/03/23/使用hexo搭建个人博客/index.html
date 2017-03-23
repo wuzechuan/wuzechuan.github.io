@@ -101,7 +101,7 @@ github账号，建立与github用户名一致的仓库；
 本机需安装Node.js，Git；
 
 安装hexo安装前先介绍几个hexo常用的命令,#后面为注释123$ hexo g #完整命令为hexo generate，用于生成静态文件$ hexo s #完整命令为hexo server，用于启动服务器，主要用来本地预览$ hexo d #完整命令为hexo deploy，用于将本地文件发">
-<meta property="og:updated_time" content="2017-03-23T08:13:24.997Z">
+<meta property="og:updated_time" content="2017-03-23T08:21:29.030Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用hexo搭建个人博客">
 <meta name="twitter:description" content="准备工作
@@ -370,13 +370,13 @@ github账号，建立与github用户名一致的仓库；
 </ul>
 <p>然后用浏览器访问<a href="http://localhost:4000/，此时，你应该看到了一个漂亮的博客了。" target="_blank" rel="external">http://localhost:4000/，此时，你应该看到了一个漂亮的博客了。</a></p>
 <h3 id="部署博客到github上"><a href="#部署博客到github上" class="headerlink" title="部署博客到github上"></a>部署博客到github上</h3><h4 id="编辑博客根目录下”-config-yml-“，根据自己的需要填写title名后，其他默认，一直到”deploy”部分，添加以下内容（注意：hexo的配置文件中任何-“-”后面都是带一个空格的）："><a href="#编辑博客根目录下”-config-yml-“，根据自己的需要填写title名后，其他默认，一直到”deploy”部分，添加以下内容（注意：hexo的配置文件中任何-“-”后面都是带一个空格的）：" class="headerlink" title="编辑博客根目录下”_config.yml “，根据自己的需要填写title名后，其他默认，一直到”deploy”部分，添加以下内容（注意：hexo的配置文件中任何 “:”后面都是带一个空格的）："></a>编辑博客根目录下”_config.yml “，根据自己的需要填写title名后，其他默认，一直到”deploy”部分，添加以下内容（注意：hexo的配置文件中任何 “:”后面都是带一个空格的）：</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy: </div><div class="line">  <span class="built_in">type</span>: git</div><div class="line">  repository: *.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
-<h4 id="编辑完配置文件后，执行"><a href="#编辑完配置文件后，执行" class="headerlink" title="编辑完配置文件后，执行"></a>编辑完配置文件后，执行</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ hexo g</div><div class="line">$ hexo d</div></pre></td></tr></table></figure>
+<h4 id="编辑完配置文件后，执行"><a href="#编辑完配置文件后，执行" class="headerlink" title="编辑完配置文件后，执行"></a>编辑完配置文件后，执行</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ hexo g</div><div class="line">$ hexo d -g</div></pre></td></tr></table></figure>
 <p>将博客推送并发布到github上，在浏览器访问*.io.git 即可看到自己的博客了</p>
 <h3 id="发表一篇博客"><a href="#发表一篇博客" class="headerlink" title="发表一篇博客"></a>发表一篇博客</h3><ul>
 <li>在命令行里输入:<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo n <span class="string">"文章名"</span></div></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>即可在”source_post”目录中找到自己的博客文章，博客主体内容通过markdown来编辑，编辑完毕后再执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ hexo g</div><div class="line">$ hexo d</div></pre></td></tr></table></figure></p>
+<p>即可在”source_post”目录中找到自己的博客文章，博客主体内容通过markdown来编辑，编辑完毕后再执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ hexo g</div><div class="line">$ hexo d -g</div></pre></td></tr></table></figure></p>
 <p>在站点上即可看到你的新文章了~~~</p>
 <h3 id="绑定个性域名"><a href="#绑定个性域名" class="headerlink" title="绑定个性域名"></a>绑定个性域名</h3><ul>
 <li>购买域名，一般都可以免费域名解析；</li>
@@ -422,6 +422,22 @@ github账号，建立与github用户名一致的仓库；
         
       
 
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/23/hexo心得/" rel="prev" title="hexo心得">
+                hexo心得 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
 
       
@@ -490,7 +506,7 @@ github账号，建立与github用户名一致的仓库；
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">2</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
