@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="持续集成,自动化," />
+  <meta name="keywords" content="性能测试," />
 
 
 
@@ -87,16 +87,22 @@
 
 
 
-<meta name="description" content="ios打包及部署命令12345678sudo xcode-select --switch /Applications/Xcode.app/Contents/Developerxcodebuild archive -workspace $&amp;#123;WORKSPACE&amp;#125;/xxxx/xxxx.xcworkspace -scheme xxxx -archivePath $&amp;#123;WORKS">
+<meta name="description" content="Tcpcopy 辅助服务器:
+安装Intercept(需要root权限)  git clone git://github.com/session-replay-tools/intercept.git  yum -y install gcc gcc-c++  yum install  libpcap-devel  cd /usr/local/intercept/sbin
+开启Intercept  s">
 <meta property="og:type" content="article">
-<meta property="og:title" content="app自动化编译及持续集成（二）">
-<meta property="og:url" content="http://chuanblog91.com/2017/03/23/app自动化编译及持续集成（二）/index.html">
+<meta property="og:title" content="tcpcopy笔记">
+<meta property="og:url" content="http://chuanblog91.com/2017/03/23/tcpcopy笔记/index.html">
 <meta property="og:site_name" content="Chuan's Blog">
-<meta property="og:description" content="ios打包及部署命令12345678sudo xcode-select --switch /Applications/Xcode.app/Contents/Developerxcodebuild archive -workspace $&amp;#123;WORKSPACE&amp;#125;/xxxx/xxxx.xcworkspace -scheme xxxx -archivePath $&amp;#123;WORKS">
-<meta property="og:updated_time" content="2017-03-23T11:00:39.947Z">
+<meta property="og:description" content="Tcpcopy 辅助服务器:
+安装Intercept(需要root权限)  git clone git://github.com/session-replay-tools/intercept.git  yum -y install gcc gcc-c++  yum install  libpcap-devel  cd /usr/local/intercept/sbin
+开启Intercept  s">
+<meta property="og:updated_time" content="2017-03-23T11:14:29.669Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="app自动化编译及持续集成（二）">
-<meta name="twitter:description" content="ios打包及部署命令12345678sudo xcode-select --switch /Applications/Xcode.app/Contents/Developerxcodebuild archive -workspace $&amp;#123;WORKSPACE&amp;#125;/xxxx/xxxx.xcworkspace -scheme xxxx -archivePath $&amp;#123;WORKS">
+<meta name="twitter:title" content="tcpcopy笔记">
+<meta name="twitter:description" content="Tcpcopy 辅助服务器:
+安装Intercept(需要root权限)  git clone git://github.com/session-replay-tools/intercept.git  yum -y install gcc gcc-c++  yum install  libpcap-devel  cd /usr/local/intercept/sbin
+开启Intercept  s">
 
 
 
@@ -124,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://chuanblog91.com/2017/03/23/app自动化编译及持续集成（二）/"/>
+  <link rel="canonical" href="http://chuanblog91.com/2017/03/23/tcpcopy笔记/"/>
 
 
 
 
 
-  <title> app自动化编译及持续集成（二） | Chuan's Blog </title>
+  <title> tcpcopy笔记 | Chuan's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -249,7 +255,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://chuanblog91.com/2017/03/23/app自动化编译及持续集成（二）/">
+    <link itemprop="mainEntityOfPage" href="http://chuanblog91.com/2017/03/23/tcpcopy笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="wuzechuan">
@@ -270,7 +276,7 @@
             
             
               
-                app自动化编译及持续集成（二）
+                tcpcopy笔记
               
             
           </h1>
@@ -285,7 +291,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-23T18:53:14+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-23T19:13:52+08:00">
                 2017-03-23
               </time>
             
@@ -343,26 +349,29 @@
       
 
       
-        <h3 id="ios打包及部署命令"><a href="#ios打包及部署命令" class="headerlink" title="ios打包及部署命令"></a>ios打包及部署命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer</div><div class="line"></div><div class="line">xcodebuild archive -workspace <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/xxxx.xcworkspace -scheme xxxx -archivePath <span class="variable">$&#123;WORKSPACE&#125;</span>/output/xxxx</div><div class="line"><span class="variable">$&#123;WORKSPACE&#125;</span>/../shell/dir.sh <span class="variable">$&#123;WORKSPACE&#125;</span>/outputIPA</div><div class="line"></div><div class="line">xcodebuild -exportArchive -exportPath <span class="variable">$&#123;WORKSPACE&#125;</span>/outputIPA/xxxx_<span class="variable">$&#123;BUILD_NUMBER&#125;</span>.ipa -exportFormat ipa -archivePath <span class="variable">$&#123;WORKSPACE&#125;</span>/output/xxxx.xcarchive -exportProvisioningProfile <span class="string">"iOS Team Provisioning Profile: *"</span></div><div class="line"></div><div class="line">\cp -fr <span class="variable">$&#123;WORKSPACE&#125;</span>/outputIPA/xxxx_<span class="variable">$&#123;BUILD_NUMBER&#125;</span>.ipa <span class="variable">$&#123;WORKSPACE&#125;</span>/outputIPA/xxxx.ipa</div></pre></td></tr></table></figure>
-<ul>
-<li>指定Xcode版本（最新代码需用xcode8编译）</li>
-<li>编译xxxx的代码，生成xcarchive文件</li>
-<li>在工程根目录下新建一个ouputIPA文件夹</li>
-<li>对xccharive进行代码签名和打包，生成对应的ipa文件，名称为xxxx_buildnumber，<br>其中buildnumber为构建编号，以区分每一次构建的包</li>
-<li>把ipa文件拷贝到outIPA下，并重命名为xxxx.ipa</li>
-<li><p>把xxxx.ipa上传（可将这一步抽出，单独建立一个任务）</p>
-<a id="more"></a>
-<h3 id="Android打包及部署命令"><a href="#Android打包及部署命令" class="headerlink" title="Android打包及部署命令"></a>Android打包及部署命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> xxxx</div><div class="line"><span class="variable">$&#123;WORKSPACE&#125;</span>/../../common_shell/dir.sh <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/app/apk_backup</div><div class="line"><span class="built_in">echo</span> <span class="string">"ARCHIVE_TYPE"</span>= <span class="variable">$&#123;ARCHIVE_TYPE&#125;</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$&#123;ARCHIVE_TYPE&#125;</span>"</span> == <span class="string">"1"</span> ]; <span class="keyword">then</span></div><div class="line">./gradlew clean</div><div class="line">./gradlew assAAAADefult000000Release --stacktrace</div><div class="line">\cp <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/app/build/outputs/apk/AAAAA_release.apk <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/app/apk_backupAAAA_release_<span class="variable">$&#123;BUILD_NUMBER&#125;</span>.apk</div><div class="line"></div><div class="line">./gradlew clean</div><div class="line">./gradlew assxxxxRelease --stacktrace</div><div class="line">\cp <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/app/build/outputs/apk/xxxx_release.apk <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/app/apk_backup/xxxx_release_<span class="variable">$&#123;BUILD_NUMBER&#125;</span>.apk</div><div class="line"></div><div class="line"><span class="keyword">else</span></div><div class="line">./gradlew clean</div><div class="line">./gradlew assAAAAADefult000000Tice --stacktrace</div><div class="line">\cp <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/app/build/outputs/apk/app-AAAAA-defult000000-tice.apk <span class="variable">$&#123;WORKSPACE&#125;</span>/juanpi/app/apk_backup/AAAAA_tice_<span class="variable">$&#123;BUILD_NUMBER&#125;</span>.apk</div><div class="line"></div><div class="line">./gradlew clean</div><div class="line">./gradlew assxxxxDefult000000Tice --stacktrace</div><div class="line">\cp <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/app/build/outputs/apk/app-xxxx-defult000000-tice.apk <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/app/apk_backup/xxxx_tice_<span class="variable">$&#123;BUILD_NUMBER&#125;</span>.apk</div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure>
+        <h3 id="Tcpcopy-辅助服务器"><a href="#Tcpcopy-辅助服务器" class="headerlink" title="Tcpcopy 辅助服务器:"></a>Tcpcopy 辅助服务器:</h3><ul>
+<li>安装Intercept(需要root权限)<br>  git clone git://github.com/session-replay-tools/intercept.git<br>  yum -y install gcc gcc-c++<br>  yum install  libpcap-devel<br>  cd /usr/local/intercept/sbin</li>
+<li><p>开启Intercept<br>  sudo ./intercept -i eth0 -l intercept.log -P /var/run/intercept.pid -F ‘tcp and src port 80’ -d<br>  参数说明：<br>  -i 制定监听的网卡<br>  -l 日志<br>  -P PID保存路径<br>  -F 拦截过滤规则<br>  -p 设置监听端口，默认36525，tcpcopy连接辅助服务器时使用</p>
+<p>  查看现网服务器已连接到本地端口<br>  ss -an |grep 36524      171-&gt;local</p>
 </li>
-<li><p>切换到xxxx目录下，这是安卓的主工程目录</p>
-</li>
-<li>在xxxx/app目录下新建一个apk_backup文件夹</li>
-<li>清除之前打包生成的文件</li>
-<li>打包xxxx代码，生成xxxxDefault00000Tice.apk文件</li>
-<li>把xxxxDefault00000Tice.apk拷贝到apk_backup文件夹下</li>
-<li>同理，目标换成AAAAA的代码</li>
 </ul>
-<h3 id="邮件通知"><a href="#邮件通知" class="headerlink" title="邮件通知"></a>邮件通知</h3><p>当构建失败时，会发邮件通知到git 提交记录对应的人，这里也可以配置其他人。邮件的服务器、帐号、密码、后缀等信息在系统设置面板中配置</p>
+<h3 id="生产Nginx服务器安装Tcpcopy"><a href="#生产Nginx服务器安装Tcpcopy" class="headerlink" title="生产Nginx服务器安装Tcpcopy:"></a>生产Nginx服务器安装Tcpcopy:</h3><ul>
+<li>下载Tcpcopy<br>  git clone git://github.com/session-replay-tools/tcpcopy.git</li>
+<li><p>安装(需要root权限)<br>  ./configure<br>  编译参数：可以不设置，默认安装在/usr/local/tcpcopy/sbin</p>
+<pre><code>--prefix=PATH                      set installation prefix
+--sbin-path=PATH                   set tcpcopy binary pathname
+--conf-path=PATH                   set plugin.conf pathname
+--pid-path=PATH                    set tcpcopy.pid pathname
+--builddir=DIR                     set build directory
+</code></pre><p>  make<br>  make install</p>
+</li>
+<li>开启Tcpcopy 导流，需要root权限，辅助服务器已经开启<br>  /usr/local/tcpcopy/sbin<br>  sudo ./tcpcopy -x 80-192.168.143.77:80 -s 192.168.143.45 -c 18.18.18.x -d -C 4 -l tcpcopy.log  -P /var/run/tcpcopy.pid<br>  参数说明：<br>  -x 导流80 端口的数据流到 192.168.143.77:80<br>  -c 61.135.250.x,61.135.251.x   修改流量来源为制定网段，多个网段用逗号隔开<br>  -s 10.120.12.161:36525,10.120.12.161:36525  指定辅助服务器和端口，默认端口36525<br>  -f 1 开启多个tcpcopy实例时使用，f参数的值必须是不同，达到多倍流量复制效果，单个不用设置</li>
+<li>查看是否成功连接到辅助服务器<br>  查看tcpcopy.log<br>  ss -an|grep 192.168.143.45<br>  tcpdump 查看是否有流量导向测试服务器<br>  sudo tcpdump -i eth0 host 192.168.143.77 and port 80</li>
+</ul>
+<h4 id="新机房服务器："><a href="#新机房服务器：" class="headerlink" title="新机房服务器："></a>新机房服务器：</h4><ul>
+<li>添加路由信息（需要root权限）<br>  把tcpcopy -c 参数里面的ip地址或者网段全部添加到路由表里面，转换到辅助服务器<br>  sudo route add -net 18.18.18.0 netmask 255.255.255.0 gw 192.168.143.45</li>
+<li>查看添加成功<br>  sudo route del -net 18.18.18.0 netmask 255.255.255.0<br>  route<br>  # ss -an |head<br>  tcpdump 查看是否有流量从修改的请求源到达测试服务器<br>  tcpdump port 80 and src net 18.18.18.0/24</li>
+</ul>
 
       
     </div>
@@ -392,9 +401,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/持续集成/" rel="tag"># 持续集成</a>
-          
-            <a href="/tags/自动化/" rel="tag"># 自动化</a>
+            <a href="/tags/性能测试/" rel="tag"># 性能测试</a>
           
         </div>
       
@@ -407,8 +414,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/23/app自动化编译及持续集成（一）/" rel="next" title="app自动化编译及持续集成（一）">
-                <i class="fa fa-chevron-left"></i> app自动化编译及持续集成（一）
+              <a href="/2017/03/23/smba笔记/" rel="next" title="smba笔记">
+                <i class="fa fa-chevron-left"></i> smba笔记
               </a>
             
           </div>
@@ -416,10 +423,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/23/smba笔记/" rel="prev" title="smba笔记">
-                smba笔记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -548,7 +551,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ios打包及部署命令"><span class="nav-number">1.</span> <span class="nav-text">ios打包及部署命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android打包及部署命令"><span class="nav-number">2.</span> <span class="nav-text">Android打包及部署命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#邮件通知"><span class="nav-number">3.</span> <span class="nav-text">邮件通知</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tcpcopy-辅助服务器"><span class="nav-number">1.</span> <span class="nav-text">Tcpcopy 辅助服务器:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生产Nginx服务器安装Tcpcopy"><span class="nav-number">2.</span> <span class="nav-text">生产Nginx服务器安装Tcpcopy:</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#新机房服务器："><span class="nav-number">2.1.</span> <span class="nav-text">新机房服务器：</span></a></li></ol></li></ol></div>
             
 
           </div>

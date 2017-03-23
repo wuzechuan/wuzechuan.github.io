@@ -247,6 +247,171 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://chuanblog91.com/2017/03/23/tcpcopy笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuzechuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/23/tcpcopy笔记/" itemprop="url">
+                  tcpcopy笔记
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-23T19:13:52+08:00">
+                2017-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术水文/" itemprop="url" rel="index">
+                    <span itemprop="name">技术水文</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="Tcpcopy-辅助服务器"><a href="#Tcpcopy-辅助服务器" class="headerlink" title="Tcpcopy 辅助服务器:"></a>Tcpcopy 辅助服务器:</h3><ul>
+<li>安装Intercept(需要root权限)<br>  git clone git://github.com/session-replay-tools/intercept.git<br>  yum -y install gcc gcc-c++<br>  yum install  libpcap-devel<br>  cd /usr/local/intercept/sbin</li>
+<li><p>开启Intercept<br>  sudo ./intercept -i eth0 -l intercept.log -P /var/run/intercept.pid -F ‘tcp and src port 80’ -d<br>  参数说明：<br>  -i 制定监听的网卡<br>  -l 日志<br>  -P PID保存路径<br>  -F 拦截过滤规则<br>  -p 设置监听端口，默认36525，tcpcopy连接辅助服务器时使用</p>
+<p>  查看现网服务器已连接到本地端口<br>  ss -an |grep 36524      171-&gt;local</p>
+</li>
+</ul>
+<h3 id="生产Nginx服务器安装Tcpcopy"><a href="#生产Nginx服务器安装Tcpcopy" class="headerlink" title="生产Nginx服务器安装Tcpcopy:"></a>生产Nginx服务器安装Tcpcopy:</h3><ul>
+<li>下载Tcpcopy<br>  git clone git://github.com/session-replay-tools/tcpcopy.git</li>
+<li><p>安装(需要root权限)<br>  ./configure<br>  编译参数：可以不设置，默认安装在/usr/local/tcpcopy/sbin</p>
+<pre><code>--prefix=PATH                      set installation prefix
+--sbin-path=PATH                   set tcpcopy binary pathname
+--conf-path=PATH                   set plugin.conf pathname
+--pid-path=PATH                    set tcpcopy.pid pathname
+--builddir=DIR                     set build directory
+</code></pre><p>  make<br>  make install</p>
+</li>
+<li>开启Tcpcopy 导流，需要root权限，辅助服务器已经开启<br>  /usr/local/tcpcopy/sbin<br>  sudo ./tcpcopy -x 80-192.168.143.77:80 -s 192.168.143.45 -c 18.18.18.x -d -C 4 -l tcpcopy.log  -P /var/run/tcpcopy.pid<br>  参数说明：<br>  -x 导流80 端口的数据流到 192.168.143.77:80<br>  -c 61.135.250.x,61.135.251.x   修改流量来源为制定网段，多个网段用逗号隔开<br>  -s 10.120.12.161:36525,10.120.12.161:36525  指定辅助服务器和端口，默认端口36525<br>  -f 1 开启多个tcpcopy实例时使用，f参数的值必须是不同，达到多倍流量复制效果，单个不用设置</li>
+<li>查看是否成功连接到辅助服务器<br>  查看tcpcopy.log<br>  ss -an|grep 192.168.143.45<br>  tcpdump 查看是否有流量导向测试服务器<br>  sudo tcpdump -i eth0 host 192.168.143.77 and port 80</li>
+</ul>
+<h4 id="新机房服务器："><a href="#新机房服务器：" class="headerlink" title="新机房服务器："></a>新机房服务器：</h4><ul>
+<li>添加路由信息（需要root权限）<br>  把tcpcopy -c 参数里面的ip地址或者网段全部添加到路由表里面，转换到辅助服务器<br>  sudo route add -net 18.18.18.0 netmask 255.255.255.0 gw 192.168.143.45</li>
+<li>查看添加成功<br>  sudo route del -net 18.18.18.0 netmask 255.255.255.0<br>  route<br>  # ss -an |head<br>  tcpdump 查看是否有流量从修改的请求源到达测试服务器<br>  tcpdump port 80 and src net 18.18.18.0/24</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://chuanblog91.com/2017/03/23/smba笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1034,7 +1199,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1056,7 +1221,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
