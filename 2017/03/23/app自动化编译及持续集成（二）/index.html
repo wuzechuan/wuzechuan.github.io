@@ -87,16 +87,16 @@
 
 
 
-<meta name="description" content="ios打包及部署命令12345sudo xcode-select --switch /Applications/Xcode.app/Contents/Developerxcodebuild archive -workspace $&amp;#123;WORKSPACE&amp;#125;/xxxx/xxxx.xcworkspace -scheme xxxx -archivePath $&amp;#123;WORKSPAC">
+<meta name="description" content="ios打包及部署命令12345678sudo xcode-select --switch /Applications/Xcode.app/Contents/Developerxcodebuild archive -workspace $&amp;#123;WORKSPACE&amp;#125;/xxxx/xxxx.xcworkspace -scheme xxxx -archivePath $&amp;#123;WORKS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="app自动化编译及持续集成（二）">
 <meta property="og:url" content="http://chuanblog91.com/2017/03/23/app自动化编译及持续集成（二）/index.html">
 <meta property="og:site_name" content="Chuan's Blog">
-<meta property="og:description" content="ios打包及部署命令12345sudo xcode-select --switch /Applications/Xcode.app/Contents/Developerxcodebuild archive -workspace $&amp;#123;WORKSPACE&amp;#125;/xxxx/xxxx.xcworkspace -scheme xxxx -archivePath $&amp;#123;WORKSPAC">
-<meta property="og:updated_time" content="2017-03-23T10:54:31.693Z">
+<meta property="og:description" content="ios打包及部署命令12345678sudo xcode-select --switch /Applications/Xcode.app/Contents/Developerxcodebuild archive -workspace $&amp;#123;WORKSPACE&amp;#125;/xxxx/xxxx.xcworkspace -scheme xxxx -archivePath $&amp;#123;WORKS">
+<meta property="og:updated_time" content="2017-03-23T11:00:39.947Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="app自动化编译及持续集成（二）">
-<meta name="twitter:description" content="ios打包及部署命令12345sudo xcode-select --switch /Applications/Xcode.app/Contents/Developerxcodebuild archive -workspace $&amp;#123;WORKSPACE&amp;#125;/xxxx/xxxx.xcworkspace -scheme xxxx -archivePath $&amp;#123;WORKSPAC">
+<meta name="twitter:description" content="ios打包及部署命令12345678sudo xcode-select --switch /Applications/Xcode.app/Contents/Developerxcodebuild archive -workspace $&amp;#123;WORKSPACE&amp;#125;/xxxx/xxxx.xcworkspace -scheme xxxx -archivePath $&amp;#123;WORKS">
 
 
 
@@ -343,7 +343,7 @@
       
 
       
-        <h3 id="ios打包及部署命令"><a href="#ios打包及部署命令" class="headerlink" title="ios打包及部署命令"></a>ios打包及部署命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer</div><div class="line">xcodebuild archive -workspace <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/xxxx.xcworkspace -scheme xxxx -archivePath <span class="variable">$&#123;WORKSPACE&#125;</span>/output/xxxx</div><div class="line"><span class="variable">$&#123;WORKSPACE&#125;</span>/../shell/dir.sh <span class="variable">$&#123;WORKSPACE&#125;</span>/outputIPA</div><div class="line">xcodebuild -exportArchive -exportPath <span class="variable">$&#123;WORKSPACE&#125;</span>/outputIPA/xxxx_<span class="variable">$&#123;BUILD_NUMBER&#125;</span>.ipa -exportFormat ipa -archivePath <span class="variable">$&#123;WORKSPACE&#125;</span>/output/xxxx.xcarchive -exportProvisioningProfile <span class="string">"iOS Team Provisioning Profile: *"</span></div><div class="line">\cp -fr <span class="variable">$&#123;WORKSPACE&#125;</span>/outputIPA/xxxx_<span class="variable">$&#123;BUILD_NUMBER&#125;</span>.ipa <span class="variable">$&#123;WORKSPACE&#125;</span>/outputIPA/xxxx.ipa</div></pre></td></tr></table></figure>
+        <h3 id="ios打包及部署命令"><a href="#ios打包及部署命令" class="headerlink" title="ios打包及部署命令"></a>ios打包及部署命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer</div><div class="line"></div><div class="line">xcodebuild archive -workspace <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/xxxx.xcworkspace -scheme xxxx -archivePath <span class="variable">$&#123;WORKSPACE&#125;</span>/output/xxxx</div><div class="line"><span class="variable">$&#123;WORKSPACE&#125;</span>/../shell/dir.sh <span class="variable">$&#123;WORKSPACE&#125;</span>/outputIPA</div><div class="line"></div><div class="line">xcodebuild -exportArchive -exportPath <span class="variable">$&#123;WORKSPACE&#125;</span>/outputIPA/xxxx_<span class="variable">$&#123;BUILD_NUMBER&#125;</span>.ipa -exportFormat ipa -archivePath <span class="variable">$&#123;WORKSPACE&#125;</span>/output/xxxx.xcarchive -exportProvisioningProfile <span class="string">"iOS Team Provisioning Profile: *"</span></div><div class="line"></div><div class="line">\cp -fr <span class="variable">$&#123;WORKSPACE&#125;</span>/outputIPA/xxxx_<span class="variable">$&#123;BUILD_NUMBER&#125;</span>.ipa <span class="variable">$&#123;WORKSPACE&#125;</span>/outputIPA/xxxx.ipa</div></pre></td></tr></table></figure>
 <ul>
 <li>指定Xcode版本（最新代码需用xcode8编译）</li>
 <li>编译xxxx的代码，生成xcarchive文件</li>
