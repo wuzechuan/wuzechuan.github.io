@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="mock,tools," />
+  <meta name="keywords" content="tools,mock," />
 
 
 
@@ -93,7 +93,7 @@
 <meta property="og:url" content="http://chuanblog91.com/2017/03/28/支付mock笔记（一）/index.html">
 <meta property="og:site_name" content="Chuan's Blog">
 <meta property="og:description" content="mock原理通过hosts指向自己部署的服务，模拟返回第三方支付端参数达到支付mock效果工具准备python，flask，stunnel（生成本地pem后缀证书用于访问https，依赖openssl，证书放在flask同目录下）">
-<meta property="og:updated_time" content="2017-03-28T02:33:41.950Z">
+<meta property="og:updated_time" content="2017-03-28T02:39:58.042Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="支付mock笔记（一）">
 <meta name="twitter:description" content="mock原理通过hosts指向自己部署的服务，模拟返回第三方支付端参数达到支付mock效果工具准备python，flask，stunnel（生成本地pem后缀证书用于访问https，依赖openssl，证书放在flask同目录下）">
@@ -352,7 +352,7 @@
 </li>
 </ul>
 <h3 id="部署mock前端"><a href="#部署mock前端" class="headerlink" title="部署mock前端"></a>部署mock前端</h3><p>包含static和templates文件夹</p>
-<h3 id="修改alipay配置（以修改php文件为例）"><a href="#修改alipay配置（以修改php文件为例）" class="headerlink" title="修改alipay配置（以修改php文件为例）"></a>修改alipay配置（以修改php文件为例）</h3><ul>
+<h3 id="修改alipay配置（以修改php文件为例，pc端）"><a href="#修改alipay配置（以修改php文件为例，pc端）" class="headerlink" title="修改alipay配置（以修改php文件为例，pc端）"></a>修改alipay配置（以修改php文件为例，pc端）</h3><ul>
 <li><p>修改alipay源码；<br>/xxxx.com/ThinkPHP/Extend/Vendor/Alipay/alipay_notify.class.php</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"> function verifyNotify()</div><div class="line">注释（//$isSign = $this-&gt;getSignVeryfy($_POST, $_POST["sign"]);）</div><div class="line">添加 $isSign = true;</div><div class="line">注释（ //if (! empty($_POST["notify_id"])) &#123;$responseTxt = $this-&gt;getResponse($_POST["notify_id"]);&#125;）</div><div class="line"></div><div class="line">function verifyReturn()</div><div class="line">注释（//$isSign = $this-&gt;getSignVeryfy($_REQUEST, $_REQUEST["sign"]);）</div><div class="line">添加 $isSign = true;</div></pre></td></tr></table></figure>
 </li>
@@ -396,9 +396,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/mock/" rel="tag"># mock</a>
-          
             <a href="/tags/tools/" rel="tag"># tools</a>
+          
+            <a href="/tags/mock/" rel="tag"># mock</a>
           
         </div>
       
@@ -411,8 +411,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/23/tcpcopy笔记/" rel="next" title="tcpcopy笔记">
-                <i class="fa fa-chevron-left"></i> tcpcopy笔记
+              <a href="/2017/03/28/支付mock笔记（二）/" rel="next" title="支付mock笔记（二）">
+                <i class="fa fa-chevron-left"></i> 支付mock笔记（二）
               </a>
             
           </div>
@@ -491,7 +491,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -548,7 +548,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#mock原理"><span class="nav-number">1.</span> <span class="nav-text">mock原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通过hosts指向自己部署的服务，模拟返回第三方支付端参数达到支付mock效果"><span class="nav-number">1.1.</span> <span class="nav-text">通过hosts指向自己部署的服务，模拟返回第三方支付端参数达到支付mock效果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工具准备"><span class="nav-number">2.</span> <span class="nav-text">工具准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#python，flask，stunnel（生成本地pem后缀证书用于访问https，依赖openssl，证书放在flask同目录下）"><span class="nav-number">2.1.</span> <span class="nav-text">python，flask，stunnel（生成本地pem后缀证书用于访问https，依赖openssl，证书放在flask同目录下）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#paymock脚本编码（基于flask）"><span class="nav-number">3.</span> <span class="nav-text">paymock脚本编码（基于flask）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成vpsee证书（通过stunnel）"><span class="nav-number">4.</span> <span class="nav-text">生成vpsee证书（通过stunnel）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#https代理配置"><span class="nav-number">5.</span> <span class="nav-text">https代理配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署mock前端"><span class="nav-number">6.</span> <span class="nav-text">部署mock前端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改alipay配置（以修改php文件为例）"><span class="nav-number">7.</span> <span class="nav-text">修改alipay配置（以修改php文件为例）</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#mock原理"><span class="nav-number">1.</span> <span class="nav-text">mock原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通过hosts指向自己部署的服务，模拟返回第三方支付端参数达到支付mock效果"><span class="nav-number">1.1.</span> <span class="nav-text">通过hosts指向自己部署的服务，模拟返回第三方支付端参数达到支付mock效果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工具准备"><span class="nav-number">2.</span> <span class="nav-text">工具准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#python，flask，stunnel（生成本地pem后缀证书用于访问https，依赖openssl，证书放在flask同目录下）"><span class="nav-number">2.1.</span> <span class="nav-text">python，flask，stunnel（生成本地pem后缀证书用于访问https，依赖openssl，证书放在flask同目录下）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#paymock脚本编码（基于flask）"><span class="nav-number">3.</span> <span class="nav-text">paymock脚本编码（基于flask）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成vpsee证书（通过stunnel）"><span class="nav-number">4.</span> <span class="nav-text">生成vpsee证书（通过stunnel）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#https代理配置"><span class="nav-number">5.</span> <span class="nav-text">https代理配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署mock前端"><span class="nav-number">6.</span> <span class="nav-text">部署mock前端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改alipay配置（以修改php文件为例，pc端）"><span class="nav-number">7.</span> <span class="nav-text">修改alipay配置（以修改php文件为例，pc端）</span></a></li></ol></div>
             
 
           </div>
