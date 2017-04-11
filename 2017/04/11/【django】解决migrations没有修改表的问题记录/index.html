@@ -87,19 +87,19 @@
 
 
 
-<meta name="description" content="问题情况在进行django开发的时候，遇到这样的情况，在models文件进行了新增表或修改表，删除了migrations，再生成新的migrations后进行migrate，会出现以下提示：
-12345Operations to perform:  Apply all migrations: admin, auth, contenttypes, interface, sessions, userm">
+<meta name="description" content="问题情况
+在进行django开发的时候，遇到这样的情况，在models文件进行了新增表或修改表，删除了migrations，再生成新的migrations后进行migrate，会出现以下提示：12345Operations to perform:  Apply all migrations: admin, auth, contenttypes, interface, sessions, userm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【django】解决migrations没有修改表的问题记录">
 <meta property="og:url" content="http://chuanblog91.com/2017/04/11/【django】解决migrations没有修改表的问题记录/index.html">
 <meta property="og:site_name" content="Chuan's Blog">
-<meta property="og:description" content="问题情况在进行django开发的时候，遇到这样的情况，在models文件进行了新增表或修改表，删除了migrations，再生成新的migrations后进行migrate，会出现以下提示：
-12345Operations to perform:  Apply all migrations: admin, auth, contenttypes, interface, sessions, userm">
-<meta property="og:updated_time" content="2017-04-11T02:42:35.003Z">
+<meta property="og:description" content="问题情况
+在进行django开发的时候，遇到这样的情况，在models文件进行了新增表或修改表，删除了migrations，再生成新的migrations后进行migrate，会出现以下提示：12345Operations to perform:  Apply all migrations: admin, auth, contenttypes, interface, sessions, userm">
+<meta property="og:updated_time" content="2017-04-11T02:44:41.475Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【django】解决migrations没有修改表的问题记录">
-<meta name="twitter:description" content="问题情况在进行django开发的时候，遇到这样的情况，在models文件进行了新增表或修改表，删除了migrations，再生成新的migrations后进行migrate，会出现以下提示：
-12345Operations to perform:  Apply all migrations: admin, auth, contenttypes, interface, sessions, userm">
+<meta name="twitter:description" content="问题情况
+在进行django开发的时候，遇到这样的情况，在models文件进行了新增表或修改表，删除了migrations，再生成新的migrations后进行migrate，会出现以下提示：12345Operations to perform:  Apply all migrations: admin, auth, contenttypes, interface, sessions, userm">
 
 
 
@@ -346,8 +346,10 @@
       
 
       
-        <h3 id="问题情况"><a href="#问题情况" class="headerlink" title="问题情况"></a>问题情况</h3><pre><code>在进行django开发的时候，遇到这样的情况，在models文件进行了新增表或修改表，删除了migrations，再生成新的migrations后进行migrate，会出现以下提示：
-</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Operations to perform:</div><div class="line">  Apply all migrations: admin, auth, contenttypes, interface, sessions, usermana</div><div class="line">ge</div><div class="line">Running migrations:</div><div class="line">  No migrations to apply.</div></pre></td></tr></table></figure>
+        <h3 id="问题情况"><a href="#问题情况" class="headerlink" title="问题情况"></a>问题情况</h3><ul>
+<li>在进行django开发的时候，遇到这样的情况，在models文件进行了新增表或修改表，删除了migrations，再生成新的migrations后进行migrate，会出现以下提示：<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Operations to perform:</div><div class="line">  Apply all migrations: admin, auth, contenttypes, interface, sessions, usermana</div><div class="line">ge</div><div class="line">Running migrations:</div><div class="line">  No migrations to apply.</div></pre></td></tr></table></figure>
+</li>
+</ul>
 <a id="more"></a>
 <h3 id="问题原理"><a href="#问题原理" class="headerlink" title="问题原理"></a>问题原理</h3><ul>
 <li>在同一个db库里，不同机器会发生这个问题；</li>

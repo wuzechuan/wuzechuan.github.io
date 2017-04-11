@@ -345,8 +345,10 @@
 
       
         
-          <h3 id="问题情况"><a href="#问题情况" class="headerlink" title="问题情况"></a>问题情况</h3><pre><code>在进行django开发的时候，遇到这样的情况，在models文件进行了新增表或修改表，删除了migrations，再生成新的migrations后进行migrate，会出现以下提示：
-</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Operations to perform:</div><div class="line">  Apply all migrations: admin, auth, contenttypes, interface, sessions, usermana</div><div class="line">ge</div><div class="line">Running migrations:</div><div class="line">  No migrations to apply.</div></pre></td></tr></table></figure>
+          <h3 id="问题情况"><a href="#问题情况" class="headerlink" title="问题情况"></a>问题情况</h3><ul>
+<li>在进行django开发的时候，遇到这样的情况，在models文件进行了新增表或修改表，删除了migrations，再生成新的migrations后进行migrate，会出现以下提示：<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Operations to perform:</div><div class="line">  Apply all migrations: admin, auth, contenttypes, interface, sessions, usermana</div><div class="line">ge</div><div class="line">Running migrations:</div><div class="line">  No migrations to apply.</div></pre></td></tr></table></figure>
+</li>
+</ul>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/04/11/【django】解决migrations没有修改表的问题记录/#more" rel="contents">
