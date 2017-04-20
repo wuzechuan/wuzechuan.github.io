@@ -1,0 +1,821 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="tools,python," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="部分内容转自https://my.oschina.net/u/1433482/blog/634047
+什么是locustio？
+Locust是易于使用、分布式的用户负载测试工具。用于网站(或其他系统)的负载测试，计算出系统可以处理并发用户数。测试时大量蝗虫会攻击你的网站。每只蝗虫(或叫测试用户)可以自定义、测试过程由web界面实时监控。这能帮助测试并确定瓶颈。Locust 完全基于的事件，单机可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="性能测试工具locust使用">
+<meta property="og:url" content="http://chuanblog91.com/2017/04/20/性能测试工具locust使用/index.html">
+<meta property="og:site_name" content="Chuan's Blog">
+<meta property="og:description" content="部分内容转自https://my.oschina.net/u/1433482/blog/634047
+什么是locustio？
+Locust是易于使用、分布式的用户负载测试工具。用于网站(或其他系统)的负载测试，计算出系统可以处理并发用户数。测试时大量蝗虫会攻击你的网站。每只蝗虫(或叫测试用户)可以自定义、测试过程由web界面实时监控。这能帮助测试并确定瓶颈。Locust 完全基于的事件，单机可">
+<meta property="og:updated_time" content="2017-04-20T08:20:29.666Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="性能测试工具locust使用">
+<meta name="twitter:description" content="部分内容转自https://my.oschina.net/u/1433482/blog/634047
+什么是locustio？
+Locust是易于使用、分布式的用户负载测试工具。用于网站(或其他系统)的负载测试，计算出系统可以处理并发用户数。测试时大量蝗虫会攻击你的网站。每只蝗虫(或叫测试用户)可以自定义、测试过程由web界面实时监控。这能帮助测试并确定瓶颈。Locust 完全基于的事件，单机可">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chuanblog91.com/2017/04/20/性能测试工具locust使用/"/>
+
+
+
+
+
+  <title> 性能测试工具locust使用 | Chuan's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chuan's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">记录些工作上的心得</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://chuanblog91.com/2017/04/20/性能测试工具locust使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuzechuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                性能测试工具locust使用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-20T16:18:17+08:00">
+                2017-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术水文/" itemprop="url" rel="index">
+                    <span itemprop="name">技术水文</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p> 部分内容转自<a href="https://my.oschina.net/u/1433482/blog/634047" target="_blank" rel="external">https://my.oschina.net/u/1433482/blog/634047</a></p>
+<h4 id="什么是locustio？"><a href="#什么是locustio？" class="headerlink" title="什么是locustio？"></a>什么是locustio？</h4><ul>
+<li>Locust是易于使用、分布式的用户负载测试工具。用于网站(或其他系统)的负载测试，计算出系统可以处理并发用户数。<br>测试时大量蝗虫会攻击你的网站。每只蝗虫(或叫测试用户)可以自定义、测试过程由web界面实时监控。这能帮助测试并确定瓶颈。<br>Locust 完全基于的事件，单机可以支持数千用户。它不使用回调，而是基于轻量进程gevent, 能简单地实线各种场景。</li>
+</ul>
+<h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><ul>
+<li>Python书写场景<ul>
+<li>无需笨重的UI或XML。仅仅是代码，协程而不是回调。</li>
+</ul>
+</li>
+<li>分布式，可扩展和，支持成千上万的用户</li>
+<li>基于Web的用户界面（基于flask）<ul>
+<li>Locust有整洁HTML + JS用户界面，实时展示测试细节，跨平台和易于扩展。</li>
+</ul>
+</li>
+<li>可以测试任何系统</li>
+<li>可控制<ul>
+<li>事件完全由gevent处理。<h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4></li>
+</ul>
+</li>
+<li>我们研究了现有的解决方案，都不符合要求。比如Apache JMeter和Tsung。JMeter基于UI操作，容易上手，但基本上不具备编程能力。其次JMeter基于线程，要模拟数千用户几乎不可能。 Tsung基于Erlang，能模拟上千用户并易于扩展，但它它基于XML的DSL，描述场景能力弱，且需要大量的数据处理才知道测试结果。<br>无论如何，我们试图解决创建蝗虫，当这些问题。希望以上都不是painpoints应该存在。<br>我想你可以说我们真的只是想在这里从头开始自己的痒。我们希望其他人会发现，因为我们做的是有益的。<a id="more"></a>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4></li>
+<li>github地址：<a href="https://github.com/locustio/locust" target="_blank" rel="external">https://github.com/locustio/locust</a> 可找到最新版本，支持python2.7~3.6</li>
+<li>pip install locustio or easy_install locustio</li>
+<li><p>校验</p>
+<ul>
+<li>执行”locust –help”能看到如下信息表示安装成功：<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># locust --help</span></div><div class="line">Usage: locust [options] [LocustClass [LocustClass2 ... ]]</div><div class="line"></div><div class="line">Options:</div><div class="line">  -h, --help            show this <span class="built_in">help</span> message and <span class="built_in">exit</span></div><div class="line">...</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>分布式测试还需要安装pyzmq。尽管locustio可以在Windows运行，但是考虑效率不推荐。</p>
+<h4 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h4></li>
+<li>直接查看官方demo</li>
+<li>官方手册地址：<a href="http://docs.locust.io/en/latest/index.html" target="_blank" rel="external">http://docs.locust.io/en/latest/index.html</a></li>
+</ul>
+<h4 id="项目实战"><a href="#项目实战" class="headerlink" title="项目实战"></a>项目实战</h4><ul>
+<li>下面我们对一个 socket.io（基于websocket，nodejs）的im项目进行实践</li>
+<li>涉及第三方库：<ul>
+<li>socketIO-client-2</li>
+</ul>
+</li>
+<li><p>通过locust编写socketio客户端</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"></div><div class="line"></div><div class="line">  <span class="keyword">import</span> requests</div><div class="line">  <span class="keyword">import</span> json</div><div class="line">  <span class="keyword">import</span> time</div><div class="line">  <span class="keyword">import</span> types</div><div class="line">  <span class="keyword">import</span> sys</div><div class="line">  <span class="keyword">import</span> os</div><div class="line">  <span class="keyword">import</span> random</div><div class="line">  <span class="keyword">import</span> logging</div><div class="line">  <span class="keyword">from</span> socketIO_client <span class="keyword">import</span> SocketIO, LoggingNamespace, BaseNamespace</div><div class="line">  <span class="keyword">from</span> locust <span class="keyword">import</span> HttpLocust, TaskSet, task, events</div><div class="line"></div><div class="line">  logger = logging.getLogger(<span class="string">'requests'</span>)</div><div class="line">  logging.getLogger(<span class="string">'requests'</span>).setLevel(logging.WARNING)</div><div class="line">  logging.basicConfig(level=logging.DEBUG)</div><div class="line"></div><div class="line"></div><div class="line">  a = [<span class="string">'a'</span>, <span class="string">'b'</span>, <span class="string">'c'</span>, <span class="string">'d'</span>, <span class="string">'e'</span>, <span class="string">'f'</span>, <span class="string">'g'</span>, <span class="string">'h'</span>, <span class="string">'i'</span>, <span class="string">'j'</span>, <span class="string">'k'</span>, <span class="string">'l'</span>, <span class="string">'m'</span>, <span class="string">'n'</span>, <span class="string">'o'</span>, <span class="string">'p'</span>, <span class="string">'q'</span>, <span class="string">'r'</span>, <span class="string">'s'</span>, <span class="string">'t'</span>, <span class="string">'u'</span>, <span class="string">'v'</span>, <span class="string">'w'</span>, <span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'z'</span>]</div><div class="line">  did = <span class="string">"did"</span>+str(long(time.time()*<span class="number">1000</span>)) + random.choice(a)</div><div class="line">  <span class="comment">#print did</span></div><div class="line"></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">on_message</span><span class="params">(*args)</span>:</span></div><div class="line">      print(<span class="string">"msg receive:"</span>, args)</div><div class="line"></div><div class="line">  hosts = <span class="string">'http://talk.xxxx.com'</span></div><div class="line">  port = <span class="number">80</span></div><div class="line"></div><div class="line">  <span class="string">"""</span></div><div class="line">  流程：</div><div class="line">  1、创建会话；</div><div class="line">  2、发送消息；</div><div class="line">  """</div><div class="line">  <span class="class"><span class="keyword">class</span> <span class="title">WebsiteTasks</span><span class="params">(TaskSet)</span>:</span></div><div class="line"></div><div class="line">      <span class="function"><span class="keyword">def</span> <span class="title">on_start</span><span class="params">(self)</span>:</span></div><div class="line">          self.conversationid = <span class="keyword">None</span></div><div class="line">          token = self.gettoken()</div><div class="line">          start = time.time()</div><div class="line">          <span class="keyword">try</span>:</div><div class="line">              self.sk = SocketIO(hosts,port=port,params=&#123;<span class="string">'token'</span>: token&#125;)</div><div class="line">              end = time.time()</div><div class="line">              events.request_success.fire(</div><div class="line">                      request_type=<span class="string">"Send"</span>,</div><div class="line">                      name=<span class="string">"Connection"</span>,</div><div class="line">                      response_time=int((end - start) * <span class="number">1000</span>),</div><div class="line">                      response_length=<span class="number">0</span>,</div><div class="line">                  )</div><div class="line">          <span class="keyword">except</span> Exception <span class="keyword">as</span> err:</div><div class="line">              events.request_failure.fire(</div><div class="line">                      request_type=<span class="string">"Send"</span>,</div><div class="line">                      name=<span class="string">"Connection"</span>,</div><div class="line">                      response_time=int((time.time() - start) * <span class="number">1000</span>),</div><div class="line">                      response_length=<span class="number">0</span>,</div><div class="line">                  )</div><div class="line">          self.sk.on(<span class="string">'message'</span>, self.create_conversation)</div><div class="line">          data = &#123;</div><div class="line">              <span class="string">"sn"</span>: <span class="number">0</span>,</div><div class="line">              <span class="string">"ver"</span>: <span class="number">2</span>,</div><div class="line">              <span class="string">"time"</span>: int(time.time()),</div><div class="line">              <span class="string">"cmid"</span>: <span class="string">""</span>.join(map(<span class="keyword">lambda</span> xx:(hex(ord(xx))[<span class="number">2</span>:]),os.urandom(<span class="number">16</span>))),</div><div class="line">              <span class="string">"confirm"</span>: <span class="number">1</span>,</div><div class="line">              <span class="string">"type"</span>: <span class="string">"Conversation"</span>,</div><div class="line">              <span class="string">"payload"</span>: &#123;</div><div class="line">                      <span class="string">"cmd"</span>: <span class="string">"createConversation"</span>,</div><div class="line">                      <span class="string">"data"</span>: &#123;<span class="string">"Id"</span>:<span class="string">""</span>&#125;</div><div class="line">              &#125;</div><div class="line">          &#125;</div><div class="line">          self.sk.wait(seconds=<span class="number">1</span>)</div><div class="line">          <span class="comment">#print(data)</span></div><div class="line">          <span class="keyword">try</span>:</div><div class="line">              start = time.time()</div><div class="line">              self.sk.send(data, self.create_conversation)</div><div class="line">              self.sk.wait_for_callbacks(seconds=<span class="number">1</span>)</div><div class="line">              end = time.time()</div><div class="line">              events.request_success.fire(</div><div class="line">                      request_type=<span class="string">"Send"</span>,</div><div class="line">                      name=<span class="string">"CreateConversation"</span>,</div><div class="line">                      response_time=int((end - start) * <span class="number">1000</span>),</div><div class="line">                      response_length=<span class="number">0</span>,</div><div class="line">                  )</div><div class="line">          <span class="keyword">except</span> Exception <span class="keyword">as</span> err:</div><div class="line">              logger.exception(<span class="string">"send create conversation fail:%s"</span>, err)</div><div class="line">              <span class="keyword">raise</span> Exception(<span class="string">"send create conversation fail:&#123;0&#125;"</span>.format(err))</div><div class="line">          <span class="keyword">if</span> self.conversationid <span class="keyword">is</span> <span class="keyword">None</span>:</div><div class="line">              <span class="keyword">raise</span> Exception(<span class="string">"create conversation failed!!"</span>)</div><div class="line"></div><div class="line">      <span class="function"><span class="keyword">def</span> <span class="title">create_conversation</span><span class="params">(self, *args)</span>:</span></div><div class="line">          <span class="keyword">if</span> type(args[<span class="number">0</span>]) <span class="keyword">is</span> types.DictType:</div><div class="line">              rp = args[<span class="number">0</span>]</div><div class="line">              <span class="keyword">if</span>  rp[<span class="string">"payload"</span>][<span class="string">"cmd"</span>] == <span class="string">'createConversation'</span>:</div><div class="line">                  self.conversationid = rp[<span class="string">"payload"</span>][<span class="string">"data"</span>][<span class="string">"conversationId"</span>]</div><div class="line">                  <span class="comment">#print "conversationid", self.conversationid</span></div><div class="line"></div><div class="line">      <span class="function"><span class="keyword">def</span> <span class="title">gettoken</span><span class="params">(self)</span>:</span></div><div class="line">          uid = <span class="number">0</span></div><div class="line">          <span class="keyword">try</span>:</div><div class="line">             <span class="comment"># 通过flask写了一个用户id的排号器</span></div><div class="line">              url = <span class="string">"http://192.168.149.34:5000/getuser"</span></div><div class="line">              <span class="comment"># r = requests.get(url)</span></div><div class="line">              r = self.client.get(<span class="string">"/getuser"</span>)</div><div class="line">              uid = eval(r.text)[<span class="number">1</span>]</div><div class="line">          <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">              <span class="keyword">raise</span> Exception(<span class="string">"getUid Error:&#123;0&#125; content:&#123;1&#125;"</span>.format(e, r.text))</div><div class="line">          <span class="keyword">try</span>:</div><div class="line">              <span class="comment">#print "uid:",uid</span></div><div class="line">              <span class="comment"># 获取登录token</span></div><div class="line">              url = <span class="string">'http://im.xxxx.com/chat'</span></div><div class="line">              payload = &#123;</div><div class="line">                  ....</div><div class="line">              &#125;</div><div class="line">              r = requests.get(url, params=payload)</div><div class="line">              token = r.json().get(<span class="string">u'data'</span>).get(<span class="string">u'token'</span>)</div><div class="line">          <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">              <span class="keyword">raise</span> Exception(<span class="string">"getToken Error:&#123;0&#125; content:&#123;1&#125;"</span>.format(e, r.content))</div><div class="line">          <span class="comment">#print token</span></div><div class="line">          <span class="keyword">return</span> token</div><div class="line"></div><div class="line"><span class="meta">      @task</span></div><div class="line">      <span class="function"><span class="keyword">def</span> <span class="title">sendmssage</span><span class="params">(self)</span>:</span></div><div class="line">          <span class="comment"># 参考wiki的消息体</span></div><div class="line">          data = &#123;</div><div class="line">              <span class="string">"sn"</span>: <span class="number">0</span>,</div><div class="line">              <span class="string">"ver"</span>: <span class="number">2</span>,</div><div class="line">              <span class="string">"time"</span>: int(time.time()),</div><div class="line">              <span class="string">"cmid"</span>: <span class="string">""</span>.join(map(<span class="keyword">lambda</span> xx:(hex(ord(xx))[<span class="number">2</span>:]),os.urandom(<span class="number">16</span>))),</div><div class="line">              <span class="string">"confirm"</span>: <span class="number">0</span>,</div><div class="line">              <span class="string">"type"</span>: <span class="string">""</span>,</div><div class="line">              <span class="string">"payload"</span>: &#123;</div><div class="line">                      <span class="string">"cmd"</span>: <span class="string">"chat"</span>,</div><div class="line">                      <span class="string">"data"</span>: &#123;</div><div class="line">                          <span class="string">"conversationId"</span>: self.conversationid,</div><div class="line">                          <span class="string">"msgType"</span>: <span class="string">'rich'</span>,</div><div class="line">                          <span class="string">"msgContent"</span>: <span class="string">"load testing...."</span></div><div class="line">                      &#125;</div><div class="line">              &#125;</div><div class="line">          &#125;</div><div class="line">          <span class="comment">#print(data)</span></div><div class="line">          <span class="keyword">try</span>:</div><div class="line">              start = time.time()</div><div class="line">              self.sk.send(data, on_message)</div><div class="line">              self.sk.wait_for_callbacks(seconds=<span class="number">1</span>)</div><div class="line">              end = time.time()</div><div class="line">              events.request_success.fire(</div><div class="line">                      request_type=<span class="string">"Send"</span>,</div><div class="line">                      name=<span class="string">"Chating"</span>,</div><div class="line">                      response_time=int((end - start) * <span class="number">1000</span>),</div><div class="line">                      response_length=<span class="number">0</span>,</div><div class="line">                  )</div><div class="line">          <span class="keyword">except</span> Exception <span class="keyword">as</span> err:</div><div class="line">              logger.exception(<span class="string">"send message fail:%s"</span>, err)</div><div class="line">              <span class="keyword">raise</span> Exception(<span class="string">"send message fail:&#123;0&#125;"</span>.format(err))</div><div class="line"></div><div class="line">  <span class="class"><span class="keyword">class</span> <span class="title">WebsiteUser</span><span class="params">(HttpLocust)</span>:</span></div><div class="line">      task_set = WebsiteTasks</div><div class="line">      min_wait = <span class="number">5000</span></div><div class="line">      max_wait = <span class="number">15000</span></div></pre></td></tr></table></figure>
+<pre><code>一般http请求demo
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div></pre></td><td class="code"><pre><div class="line">  <span class="comment"># -*- coding:utf-8 -*-</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">import</span> json</div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> random</div><div class="line"><span class="keyword">from</span> locust <span class="keyword">import</span> HttpLocust, TaskSet, task, events</div><div class="line"><span class="keyword">from</span> requests.exceptions <span class="keyword">import</span> (RequestException, MissingSchema,</div><div class="line">    InvalidSchema, InvalidURL)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">WebsiteTasks</span><span class="params">(TaskSet)</span>:</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">on_start</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">pass</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">check_response</span><span class="params">(self, response)</span>:</span></div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            response.raise_for_status()</div><div class="line">        <span class="keyword">except</span> RequestException <span class="keyword">as</span> e:</div><div class="line">            events.request_failure.fire(</div><div class="line">                request_type=response.locust_request_meta[<span class="string">"method"</span>],</div><div class="line">                name=response.locust_request_meta[<span class="string">"name"</span>],</div><div class="line">                response_time=response.locust_request_meta[<span class="string">"response_time"</span>],</div><div class="line">                exception=e,</div><div class="line">            )</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            code = response.json().get(<span class="string">"code"</span>)</div><div class="line">            <span class="keyword">if</span> code == <span class="number">1000</span>:</div><div class="line">                events.request_success.fire(</div><div class="line">                    request_type=response.locust_request_meta[<span class="string">"method"</span>],</div><div class="line">                    name=response.locust_request_meta[<span class="string">"name"</span>],</div><div class="line">                    response_time=response.locust_request_meta[<span class="string">"response_time"</span>],</div><div class="line">                    response_length=response.locust_request_meta[<span class="string">"content_size"</span>],</div><div class="line">                )</div><div class="line">            <span class="keyword">else</span>:</div><div class="line">                events.request_failure.fire(</div><div class="line">                    request_type=response.locust_request_meta[<span class="string">"method"</span>],</div><div class="line">                    name=response.locust_request_meta[<span class="string">"name"</span>],</div><div class="line">                    response_time=response.locust_request_meta[<span class="string">"response_time"</span>],</div><div class="line">                    response_length=response.locust_request_meta[<span class="string">"content_size"</span>],</div><div class="line">                    exception=<span class="string">"Response Code Error! Code:&#123;0&#125;"</span>.format(code)</div><div class="line">                )</div><div class="line"><span class="meta">    @task</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">requests_Msgs</span><span class="params">(self)</span>:</span></div><div class="line">        cookies= &#123;...&#125;</div><div class="line">        url = <span class="string">"/business"</span></div><div class="line">        payload = &#123;...&#125;</div><div class="line">        headers = &#123;</div><div class="line">            <span class="string">'Content-Type'</span>:<span class="string">'application/x-www-form-urlencoded'</span></div><div class="line">            &#125;</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            rsp = self.client.post(url, data=payload, headers=headers, catch_response=<span class="keyword">True</span>, cookies=cookies)</div><div class="line">            <span class="comment"># print r.text</span></div><div class="line">            self.check_response(rsp)</div><div class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> err:</div><div class="line">            <span class="comment"># logger.exception("request Msgs fail:%s", err)</span></div><div class="line">            <span class="keyword">raise</span> Exception(<span class="string">"request Msgs fail:&#123;0&#125;"</span>.format(err))</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">WebsiteUser</span><span class="params">(HttpLocust)</span>:</span></div><div class="line">    task_set = WebsiteTasks</div><div class="line">    min_wait = <span class="number">5000</span></div><div class="line">    max_wait = <span class="number">15000</span></div><div class="line">    host = <span class="string">"http://chat.xxxx.com"</span></div></pre></td></tr></table></figure>
+</code></pre></li>
+</ul>
+<p>  HttpLocust继承自Locust，添加了client属性。client属性是HttpSession实例，可以用于生成HTTP请求。<br>  on_start为client初始化时执行的步骤。<br>  task表示下面方法是测试内容，里面的数字执行比例，这里about页面占三分之一，主页占三分之二。<br>  task_set指定client执行的类。min_wait和max_wait为两次执行之间的最小和最长等待时间。</p>
+<ul>
+<li><p>启动</p>
+<ul>
+<li>启动locust后台,–port可自定义端口，默认8089<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">locust <span class="_">-f</span> imlocust.py --host http://192.168.149.34:5000 --port 80</div><div class="line">[root@localhost im]<span class="comment"># locust -f imlocust3.py --host http://192.168.149.34:5000 --port 80</span></div><div class="line">[2017-04-21 15:34:36,366] localhost.localdomain/INFO/locust.main: Starting web monitor at *:80</div><div class="line">[2017-04-21 15:34:39,103] localhost.localdomain/INFO/locust.main: Starting Locust 0.8a2</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>在浏览器启动locust</p>
+<ul>
+<li>打开<a href="http://127.0.0.1:80/，配置模拟的用户数&quot;Number" target="_blank" rel="external">http://127.0.0.1:80/，配置模拟的用户数&quot;Number</a> of users to simulate”和每秒发起的用户数”Hatch rate”，提交执行测试。<br>这时在浏览器就可以看到实时的测试结果。点击浏览器上方的”stop”即可停止测试。</li>
+</ul>
+</li>
+<li><p>命令行按Ctrl + c , 可以显示一些摘要,类似下图的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">[2015-05-08 16:48:19,884] andrew-Hi-Fi-A88S2/INFO/locust.main: Shutting down (<span class="built_in">exit</span> code 0), bye.</div><div class="line">   Name                                                          <span class="comment"># reqs      # fails     Avg     Min     Max  |  Median   req/s</span></div><div class="line">  --------------------------------------------------------------------------------------------------------------------------------------------</div><div class="line">   GET /                                                             36     0(0.00%)     260     206     411  |     250    0.90</div><div class="line">   GET /about                                                        17     0(0.00%)     199     146     519  |     170    0.10</div><div class="line">  --------------------------------------------------------------------------------------------------------------------------------------------</div><div class="line">   Total                                                             53     0(0.00%)                                       1.00</div><div class="line"></div><div class="line">  Percentage of the requests completed within given <span class="built_in">times</span></div><div class="line">   Name                                                           <span class="comment"># reqs    50%    66%    75%    80%    90%    95%    98%    99%   100%</span></div><div class="line">  --------------------------------------------------------------------------------------------------------------------------------------------</div><div class="line">   GET /                                                              36    250    260    260    270    370    400    410    410    411</div><div class="line">   GET /about                                                         17    170    180    180    200    290    520    520    520    519</div><div class="line">  --------------------------------------------------------------------------------------------------------------------------------------------</div></pre></td></tr></table></figure>
+</li>
+<li><p>网页上可以下载csv文件，一个是调配记录，一个是请求记录。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># cat distribution_1431074713.45.csv </span></div><div class="line">  <span class="string">"Name"</span>,<span class="string">"# requests"</span>,<span class="string">"50%"</span>,<span class="string">"66%"</span>,<span class="string">"75%"</span>,<span class="string">"80%"</span>,<span class="string">"90%"</span>,<span class="string">"95%"</span>,<span class="string">"98%"</span>,<span class="string">"99%"</span>,<span class="string">"100%"</span></div><div class="line">  <span class="string">"GET /"</span>,36,250,260,260,270,370,400,410,410,411</div><div class="line">  <span class="string">"GET /about"</span>,17,170,180,180,200,290,520,520,520,519</div><div class="line">  <span class="string">"None Total"</span>,53,250,250,260,260,310,400,410,520,519</div><div class="line"></div><div class="line">  <span class="comment"># cat requests_1431074710.05.csv </span></div><div class="line">  <span class="string">"Method"</span>,<span class="string">"Name"</span>,<span class="string">"# requests"</span>,<span class="string">"# failures"</span>,<span class="string">"Median response time"</span>,<span class="string">"Average response time"</span>,<span class="string">"Min response time"</span>,<span class="string">"Max response time"</span>,<span class="string">"Average Content Size"</span>,<span class="string">"Requests/s"</span></div><div class="line">  <span class="string">"GET"</span>,<span class="string">"/"</span>,36,0,250,260,206,411,9055,0.76</div><div class="line">  <span class="string">"GET"</span>,<span class="string">"/about"</span>,17,0,170,199,146,519,4456,0.36</div><div class="line">  <span class="string">"None"</span>,<span class="string">"Total"</span>,53,0,250,241,146,519,7579,1.12</div></pre></td></tr></table></figure>
+</li>
+<li><p>其他：</p>
+<ul>
+<li>指定测试文件启动：locust -f ../locust_files/my_locust_file.py –host=<a href="http://example.com" target="_blank" rel="external">http://example.com</a><br>分布式测试时作为主测试机：locust -f ../locust_files/my_locust_file.py –master –host=<a href="http://example.com" target="_blank" rel="external">http://example.com</a><br>分布式测试时作为从测试机：locust -f ../locust_files/my_locust_file.py –slave –master-host=192.168.0.100 host=<a href="http://example.com。master-host的默认值是127.0.0.1。" target="_blank" rel="external">http://example.com。master-host的默认值是127.0.0.1。</a></li>
+</ul>
+</li>
+<li>locustfile<ul>
+<li>locustfile需要定义至少一个locust类。</li>
+</ul>
+</li>
+<li><p>Locust类</p>
+<ul>
+<li>locust类代表用户。属性如下：<ul>
+<li>task_set属性</li>
+</ul>
+</li>
+<li>task_set属性指向定义了用户的行为的TaskSet类。<ul>
+<li>min_wait和max_wait属性</li>
+</ul>
+</li>
+<li>两次执行之间的最小和最长等待时间，单位：毫秒，即执行各任务之间等待时间。默认为1000，并且因此蝗虫永远等待1秒各任务之间如果min_wait和MAX_WAIT未声明。</li>
+<li>用下面locustfile，每个用户将等待任务之间5到15秒：<ul>
+<li>weight属性</li>
+</ul>
+</li>
+<li><p>可以同时执行同一文件的多个locust：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># locust -f locust_file.py WebUserLocust MobileUserLocust</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>嵌套的python代码示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ForumPage</span><span class="params">(TaskSet)</span>:</span></div><div class="line"><span class="meta">@task(20)</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_thread</span><span class="params">(self)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="meta">@task(1)</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">new_thread</span><span class="params">(self)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="meta">@task(5)</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">stop</span><span class="params">(self)</span>:</span></div><div class="line">    self.interrupt()<span class="class"><span class="keyword">class</span> <span class="title">UserBehaviour</span><span class="params">(TaskSet)</span>:</span></div><div class="line">tasks = &#123;ForumPage:<span class="number">10</span>&#125;</div><div class="line"></div><div class="line"><span class="meta">@task</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(self)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>类嵌套示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyTaskSet</span><span class="params">(TaskSet)</span>:</span></div><div class="line"><span class="meta">  @task</span></div><div class="line">  <span class="class"><span class="keyword">class</span> <span class="title">SubTaskSet</span><span class="params">(TaskSet)</span>:</span></div><div class="line"><span class="meta">      @task</span></div><div class="line">      <span class="function"><span class="keyword">def</span> <span class="title">my_task</span><span class="params">(self)</span>:</span></div><div class="line">          <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>HTTP请求</p>
+<ul>
+<li>HttpLocust继承自Locust，添加了client属性。client属性是HttpSession实例，调用了requests，可以用于生成HTTP请求。 self.client设置了属性指向 self.locust.client。</li>
+<li><p>get 和post示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># get</span></div><div class="line">response = self.client.get(<span class="string">"/about"</span>)</div><div class="line"><span class="keyword">print</span> <span class="string">"Response status code:"</span>, response.status_code</div><div class="line"><span class="keyword">print</span> <span class="string">"Response content:"</span>, response.content</div><div class="line"><span class="comment"># post</span></div><div class="line">response = self.client.post(<span class="string">"/login"</span>, &#123;<span class="string">"username"</span>:<span class="string">"testuser"</span>, <span class="string">"password"</span>:<span class="string">"secret"</span>&#125;)</div></pre></td></tr></table></figure>
+</li>
+<li><p>注意失败的任何请求如连接错误，超时等不产生异常，而是返回None，status_code是0。</p>
+</li>
+<li>默认只要返回的不是200都是失败。也可以设置失败和成功：<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">with</span> client.get(<span class="string">"/"</span>, catch_response=<span class="keyword">True</span>) <span class="keyword">as</span> response:</div><div class="line"><span class="keyword">if</span> response.content != <span class="string">"Success"</span>:</div><div class="line">    response.failure(<span class="string">"Got wrong response"</span>)</div><div class="line"></div><div class="line"><span class="keyword">with</span> client.get(<span class="string">"/does_not_exist/"</span>, catch_response=<span class="keyword">True</span>) <span class="keyword">as</span> response:</div><div class="line"> <span class="keyword">if</span> response.status_code == <span class="number">404</span>:</div><div class="line">     response.success()</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>动态参数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Statistics for these requests will be grouped under: /blog/?id=[id]</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</div><div class="line">      client.get(<span class="string">"/blog?id=%i"</span> % i, name=<span class="string">"/blog?id=[id]"</span>)</div></pre></td></tr></table></figure>
+</li>
+<li><p>分布式测试</p>
+<ul>
+<li>主机使用–master，它不会模拟任何用户。实际测试机需要–slave和–master-host参数。通常一个cpu核可以执行一个从机。<br>master的参数还有: “–master-bind-host=X.X.X.X”和–master-bind-host=X.X.X.X。<br>从机的参数有：”–master-port=5557”，或者  –slave –master-host=X.X.X.X。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tools/" rel="tag"># tools</a>
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/11/【django】嵌入LDAP心得/" rel="next" title="【django】嵌入LDAP心得">
+                <i class="fa fa-chevron-left"></i> 【django】嵌入LDAP心得
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/1.png"
+               alt="wuzechuan" />
+          <p class="site-author-name" itemprop="name">wuzechuan</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是locustio？"><span class="nav-number">1.</span> <span class="nav-text">什么是locustio？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特点"><span class="nav-number">2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#背景"><span class="nav-number">3.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">4.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#快速入门"><span class="nav-number">5.</span> <span class="nav-text">快速入门</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#项目实战"><span class="nav-number">6.</span> <span class="nav-text">项目实战</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wuzechuan</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
