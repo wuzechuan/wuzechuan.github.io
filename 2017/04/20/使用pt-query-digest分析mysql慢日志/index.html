@@ -1,0 +1,743 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="tools,mysql," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="工具介绍
+pt-query-digest是用于分析mysql慢查询的一个工具，它可以分析binlog、General log、slowlog，也可以通过SHOWPROCESSLIST或者通过tcpdump抓取的MySQL协议数据来进行分析。可以把分析结果输出到文件中，分析过程是先对查询语句的条件进行参数化，然后对参数化以后的查询进行分组统计，统计出各查询的执行时间、次数、占比等，可以借助分析结果找">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用pt-query-digest分析mysql慢日志">
+<meta property="og:url" content="http://chuanblog91.com/2017/04/20/使用pt-query-digest分析mysql慢日志/index.html">
+<meta property="og:site_name" content="Chuan's Blog">
+<meta property="og:description" content="工具介绍
+pt-query-digest是用于分析mysql慢查询的一个工具，它可以分析binlog、General log、slowlog，也可以通过SHOWPROCESSLIST或者通过tcpdump抓取的MySQL协议数据来进行分析。可以把分析结果输出到文件中，分析过程是先对查询语句的条件进行参数化，然后对参数化以后的查询进行分组统计，统计出各查询的执行时间、次数、占比等，可以借助分析结果找">
+<meta property="og:updated_time" content="2017-04-20T10:00:27.702Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用pt-query-digest分析mysql慢日志">
+<meta name="twitter:description" content="工具介绍
+pt-query-digest是用于分析mysql慢查询的一个工具，它可以分析binlog、General log、slowlog，也可以通过SHOWPROCESSLIST或者通过tcpdump抓取的MySQL协议数据来进行分析。可以把分析结果输出到文件中，分析过程是先对查询语句的条件进行参数化，然后对参数化以后的查询进行分组统计，统计出各查询的执行时间、次数、占比等，可以借助分析结果找">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://chuanblog91.com/2017/04/20/使用pt-query-digest分析mysql慢日志/"/>
+
+
+
+
+
+  <title> 使用pt-query-digest分析mysql慢日志 | Chuan's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chuan's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">记录些工作上的心得</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://chuanblog91.com/2017/04/20/使用pt-query-digest分析mysql慢日志/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuzechuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                使用pt-query-digest分析mysql慢日志
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-20T17:59:29+08:00">
+                2017-04-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术水文/" itemprop="url" rel="index">
+                    <span itemprop="name">技术水文</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="工具介绍"><a href="#工具介绍" class="headerlink" title="工具介绍"></a>工具介绍</h4><ul>
+<li>pt-query-digest是用于分析mysql慢查询的一个工具，它可以分析binlog、General log、slowlog，也可以通过SHOWPROCESSLIST或者通过tcpdump抓取的MySQL协议数据来进行分析。可以把分析结果输出到文件中，分析过程是先对查询语句的条件进行参数化，然后对参数化以后的查询进行分组统计，统计出各查询的执行时间、次数、占比等，可以借助分析结果找出问题进行优化。</li>
+</ul>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><ul>
+<li>pt-query-digest是一个perl脚本，只需下载并赋权即可执行。<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@<span class="built_in">test</span>1 ]<span class="comment"># wget percona.com/get/pt-query-digest </span></div><div class="line">[root@<span class="built_in">test</span>1 ]<span class="comment"># chmod u+x pt-query-digest</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<a id="more"></a>
+<h4 id="语法及重要选项"><a href="#语法及重要选项" class="headerlink" title="语法及重要选项`"></a>语法及重要选项`</h4><ul>
+<li>pt-query-digest [OPTIONS] [FILES] [DSN]<br>–create-review-table  当使用–review参数把分析结果输出到表中时，如果没有表就自动创建。<br>  –create-history-table  当使用–history参数把分析结果输出到表中时，如果没有表就自动创建。<br>  –filter  对输入的慢查询按指定的字符串进行匹配过滤后再进行分析<br>  –limit限制输出结果百分比或数量，默认值是20,即将最慢的20条语句输出，如果是50%则按总响应时间占比从大到小排序，输出到总和达到50%位置截止。<br>  –host  MySQL服务器地址<br>  –user  mysql用户名<br>  –password  mysql用户密码<br>  –history 将分析结果保存到表中，分析结果比较详细，下次再使用–history时，如果存在相同的语句，且查询所在的时间区间和历史表中的不同，则会记录到数据表中，可以通过查询同一CHECKSUM来比较某类型查询的历史变化。<br>  –review 将分析结果保存到表中，这个分析只是对查询条件进行参数化，一个类型的查询一条记录，比较简单。当下次使用–review时，如果存在相同的语句分析，就不会记录到数据表中。<br>  –output 分析结果输出类型，值可以是report(标准分析报告)、slowlog(Mysql slow log)、json、json-anon，一般使用report，以便于阅读。<br>  –since 从什么时间开始分析，值为字符串，可以是指定的某个”yyyy-mm-dd [hh:mm:ss]”格式的时间点，也可以是简单的一个时间值：s(秒)、h(小时)、m(分钟)、d(天)，如12h就表示从12小时前开始统计。<br>  –until 截止时间，配合—since可以分析一段时间内的慢查询。</li>
+</ul>
+<h4 id="标准分析报告解释"><a href="#标准分析报告解释" class="headerlink" title="标准分析报告解释"></a>标准分析报告解释</h4><ul>
+<li><p>第一部分：总体统计结果,如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 30.3s user time, 100ms system time, 54.43M rss, 234.72M vsz</span></div><div class="line"><span class="comment"># Current date: Thu Apr 20 14:29:53 2017</span></div><div class="line"><span class="comment"># Hostname: sz-4PG5S62-143.233</span></div><div class="line"><span class="comment"># Files: slowquery_2017041702.log</span></div><div class="line"><span class="comment"># Overall: 148.29k total, 879 unique, 0.49 QPS, 0.01x concurrency ________</span></div><div class="line"><span class="comment"># Time range: 2017-04-17 02:00:17 to 2017-04-20 14:29:49</span></div><div class="line"><span class="comment"># Attribute          total     min     max     avg     95%  stddev  median</span></div><div class="line"><span class="comment"># ============     ======= ======= ======= ======= ======= ======= =======</span></div><div class="line"><span class="comment"># Exec time          1580s    45us    113s    11ms    24ms   444ms   490us</span></div><div class="line"><span class="comment"># Lock time            16s       0   132ms   104us   204us   735us    76us</span></div><div class="line"><span class="comment"># Rows sent         56.71M       0 122.51k  401.02  964.41  568.90   15.25</span></div><div class="line"><span class="comment"># Rows examine       1.85G       0 763.31k  13.07k  46.68k  18.55k  537.02</span></div><div class="line"><span class="comment"># Rows affecte     126.89k       0 109.06k    0.88       0  285.80       0</span></div><div class="line"><span class="comment"># Bytes sent        16.31G       0   3.11M 115.35k 328.61k 146.47k   2.27k</span></div><div class="line"><span class="comment"># Query size        45.01M      17  67.14k  318.25  621.67  425.75  166.51</span></div></pre></td></tr></table></figure>
+<p>Overall: 总共有多少条查询，上例为总共266个查询。<br>  Time range: 查询执行的时间范围。<br>  unique: 唯一查询数量，即对查询条件进行参数化以后，总共有多少个不同的查询，该例为55。<br>  total: 总计   min:最小   max: 最大  avg:平均<br>  95%: 把所有值从小到大排列，位置位于95%的那个数，这个数一般最具有参考价值。<br>  median: 中位数，把所有值从小到大排列，位置位于中间那个数。</p>
+</li>
+<li><p>查询分组统计结果,如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Profile</span></div><div class="line"><span class="comment"># Rank Query ID           Response time  Calls R/Call  V/M   Item</span></div><div class="line"><span class="comment"># ==== ================== ============== ===== ======= ===== =============</span></div><div class="line"><span class="comment">#    1 0x28BCEDE65DD7D889 675.7240 42.8% 54848  0.0123  0.00 SELECT x_sgoods_info</span></div><div class="line"><span class="comment">#    2 0xD39A2C708040855B 265.9995 16.8%     4 66.4999 18.15 SELECT x_sgoods_apply</span></div><div class="line"><span class="comment">#    3 0x8C491C4FD5198E48 106.7519  6.8%  4032  0.0265  0.00 UPDATE SELECT x_activity_ext</span></div><div class="line"><span class="comment">#    4 0xD33CA91CD8B4E2D8  79.5063  5.0%     1 79.5063  0.00 DELETE x_sell_schedule</span></div><div class="line"><span class="comment">#    5 0x5C6FF2B6FCCA3017  68.0030  4.3%  2520  0.0270  0.00 UPDATE x_activity_ext</span></div><div class="line"><span class="comment">#    6 0xF5BDA316B1B737EA  41.2985  2.6%     6  6.8831 10.86 SELECT x_ims_inventory_? wms_sz</span></div><div class="line"><span class="comment">#    7 0x30C0057AC8384E14  25.6073  1.6%    11  2.3279  0.10 SHOW TABLES</span></div><div class="line"><span class="comment">#    8 0xF382DCE6D809E44D  25.4006  1.6%   504  0.0504  0.00 SELECT information_schema.triggers</span></div><div class="line"><span class="comment">#    9 0x719C7301B7CF64D7  21.8942  1.4%   991  0.0221  0.00 SELECT x_activity</span></div><div class="line"><span class="comment">#   10 0xF175BFA8DBAF36CA  17.9455  1.1%    16  1.1216  0.53 SELECT x_aftersale.x_back_order_history</span></div><div class="line"><span class="comment">#   11 0xB6ED284B889F94EC  16.5861  1.1%     1 16.5861  0.00 SELECT x_ims_inventory wms_wh</span></div><div class="line"><span class="comment">#   12 0x9118568215E7D69D  13.8534  0.9%     2  6.9267  1.59 SELECT x_ims_inventory_? wms_gz</span></div><div class="line"><span class="comment">#   13 0x26D6EC4CB906C42B  13.5226  0.9%   504  0.0268  0.00 UPDATE x_activity_ext</span></div><div class="line"><span class="comment">#   14 0xFA3C32281E8D3961  13.4112  0.8%   326  0.0411  0.00 SELECT x_business.x_business_brand</span></div><div class="line"><span class="comment">#   15 0x8FAD804AD81A4A74  12.3985  0.8%  2289  0.0054  0.00 SELECT x_business.x_enter_brand</span></div><div class="line"><span class="comment">#   16 0x445D20E44CF56324  10.6359  0.7%     7  1.5194  0.17 SHOW TABLE STATUS</span></div><div class="line"><span class="comment">#   17 0x516BDC428E566067   8.5546  0.5%    37  0.2312  1.10 SELECT x_gsort_position</span></div><div class="line"><span class="comment">#   18 0xA7F5E897554A30D5   8.4394  0.5%     3  2.8131  4.47 SELECT x_ims_inventory wms_wh</span></div><div class="line"><span class="comment">#   19 0xEF6FFF1D5B1B645E   8.2623  0.5%     2  4.1312  0.38 SELECT INFORMATION_SCHEMA.KEY_COLUMN_USAGE</span></div><div class="line"><span class="comment">#   20 0xB8A4114AE57A78EE   7.1822  0.5%     2  3.5911  6.49 SELECT x_sgoods_bag x_sgoods_apply</span></div><div class="line"><span class="comment"># MISC 0xMISC             138.5347  8.8% 82182  0.0017   0.0 &lt;859 ITEMS&gt;</span></div></pre></td></tr></table></figure>
+<p>由上可见，这部分对查询进行参数化并分组，然后对各类查询的执行情况进行分析，结果按总执行时长，从大到小排序。<br>  Response: 总的响应时间。<br>  time: 该查询在本次分析中总的时间占比。<br>  calls: 执行次数，即本次分析总共有多少条这种类型的查询语句。<br>  R/Call: 平均每次执行的响应时间。<br>  Item : 查询对象</p>
+</li>
+<li><p>第三部分：每一种查询的详细统计结果，如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Query 1: 0.18 QPS, 0.00x concurrency, ID 0x28BCEDE65DD7D889 at byte 6647850</span></div><div class="line"><span class="comment"># This item is included in the report because it matches --limit.</span></div><div class="line"><span class="comment"># Scores: V/M = 0.00</span></div><div class="line"><span class="comment"># Time range: 2017-04-17 02:06:42 to 2017-04-20 14:22:48</span></div><div class="line"><span class="comment"># Attribute    pct   total     min     max     avg     95%  stddev  median</span></div><div class="line"><span class="comment"># ============ === ======= ======= ======= ======= ======= ======= =======</span></div><div class="line"><span class="comment"># Count         36   54848</span></div><div class="line"><span class="comment"># Exec time     42    676s     4ms    89ms    12ms    19ms     4ms    12ms</span></div><div class="line"><span class="comment"># Lock time     46      7s    74us   355us   131us   214us    43us   113us</span></div><div class="line"><span class="comment"># Rows sent     90  51.27M       0    1000  980.16  964.41  124.14  964.41</span></div><div class="line"><span class="comment"># Rows examine  81   1.52G   2.93k  56.25k  28.98k  51.46k  14.94k  28.66k</span></div><div class="line"><span class="comment"># Rows affecte   0       0       0       0       0       0       0       0</span></div><div class="line"><span class="comment"># Bytes sent    98  16.10G   2.36k 337.44k 307.89k 328.61k  40.65k 298.06k</span></div><div class="line"><span class="comment"># Query size    73  33.25M     632     636  635.76  621.67       0  621.67</span></div><div class="line"><span class="comment"># String:</span></div><div class="line"><span class="comment"># Databases    x_sgoods</span></div><div class="line"><span class="comment"># Hosts        192.168.143.95</span></div><div class="line"><span class="comment"># Last errno   0</span></div><div class="line"><span class="comment"># Users        test</span></div><div class="line"><span class="comment"># Query_time distribution</span></div><div class="line"><span class="comment">#   1us</span></div><div class="line"><span class="comment">#  10us</span></div><div class="line"><span class="comment"># 100us</span></div><div class="line"><span class="comment">#   1ms  ###############################</span></div><div class="line"><span class="comment">#  10ms  ################################################################</span></div><div class="line"><span class="comment"># 100ms</span></div><div class="line"><span class="comment">#    1s</span></div><div class="line"><span class="comment">#  10s+</span></div><div class="line"><span class="comment"># Tables</span></div><div class="line"><span class="comment">#    SHOW TABLE STATUS FROM `x_sgoods` LIKE 'x_sgoods_info'\G</span></div><div class="line"><span class="comment">#    SHOW CREATE TABLE `x_sgoods`.`x_sgoods_info`\G</span></div><div class="line"><span class="comment"># EXPLAIN /*!50100 PARTITIONS*/</span></div><div class="line">SELECT  </div><div class="line"></div><div class="line">        ````</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">   由上图可见，12号查询的详细统计结果，最上面的表格列出了执行次数、最大、最小、平均、95%等各项目的统计。</div><div class="line">    Databases: 库名</div><div class="line">    Users: 各个用户执行的次数（占比）</div><div class="line">    Query_time distribution : 查询时间分布, 长短体现区间占比，本例中1s-10s之间查询数量是10s以上的两倍。</div><div class="line">    Tables: 查询中涉及到的表</div><div class="line">    Explain: 示例</div><div class="line">  </div><div class="line">#### 用法示例</div><div class="line">* 直接分析慢查询文件:</div><div class="line">   pt-query-digest  slow.log &gt; slow_report.log</div><div class="line">   （slow.log为mysql路径的慢日志文件，后面为分析后的文件）</div><div class="line">   获取慢日志地址：</div><div class="line">   在mysql命令行执行</div><div class="line">   ```mysql</div><div class="line">       show variables like &apos;%slow%&apos;;</div></pre></td></tr></table></figure>
+</li>
+<li><p>分析最近12小时内的查询：<br>pt-query-digest  –since=12h  slow.log &gt; slow_report2.log</p>
+</li>
+<li><p>分析指定时间范围内的查询：<br>pt-query-digest slow.log –since ‘2014-04-17 09:30:00’ –until ‘2014-04-17 10:00:00’&gt; &gt; slow_report3.log</p>
+</li>
+<li><p>分析指含有select语句的慢查询：<br>pt-query-digest–filter ‘$event-&gt;{fingerprint} =~ m/^select/i’ slow.log&gt; slow_report4.log</p>
+</li>
+<li><p>针对某个用户的慢查询：<br>pt-query-digest–filter ‘($event-&gt;{user} || “”) =~ m/^root/i’ slow.log&gt; slow_report5.log</p>
+</li>
+<li><p>查询所有的全表扫描或full join的慢查询：<br>pt-query-digest–filter ‘(($event-&gt;{Full_scan} || “”) eq “yes”) ||(($event-&gt;{Full_join} || “”) eq “yes”)’ slow.log&gt; slow_report6.log</p>
+</li>
+<li><p>把查询保存到query_review表：<br>pt-query-digest  –user=root –password=abc123 –review  h=localhost,D=test,t=query_review–create-review-table  slow.log</p>
+</li>
+<li><p>把查询保存到query<em>history表：<br>pt-query-digest  –user=root –password=abc123 –review  h=localhost,D=test,t=query</em> history–create-review-table  slow.log_20140401</p>
+</li>
+<li><p>通过tcpdump抓取mysql的tcp协议数据，然后再分析：<br>tcpdump -s 65535 -x -nn -q -tttt -i any -c 1000 port 3306 &gt; mysql.tcp.txt<br>pt-query-digest –type tcpdump mysql.tcp.txt&gt; slow_report9.log</p>
+</li>
+<li><p>分析binlog：<br>mysqlbinlog mysql-bin.000093 &gt; mysql-bin000093.sql<br>pt-query-digest  –type=binlog  mysql-bin000093.sql &gt; slow_report10.log</p>
+</li>
+<li><p>分析general log：<br>pt-query-digest  –type=genlog  localhost.log &gt; slow_report11.log</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tools/" rel="tag"># tools</a>
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/20/性能测试工具locust使用/" rel="next" title="性能测试工具locust使用">
+                <i class="fa fa-chevron-left"></i> 性能测试工具locust使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/1.png"
+               alt="wuzechuan" />
+          <p class="site-author-name" itemprop="name">wuzechuan</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#工具介绍"><span class="nav-number">1.</span> <span class="nav-text">工具介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#语法及重要选项"><span class="nav-number">3.</span> <span class="nav-text">语法及重要选项`</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准分析报告解释"><span class="nav-number">4.</span> <span class="nav-text">标准分析报告解释</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wuzechuan</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
