@@ -88,18 +88,45 @@
 
 
 <meta name="description" content="工具介绍
-pt-query-digest是用于分析mysql慢查询的一个工具，它可以分析binlog、General log、slowlog，也可以通过SHOWPROCESSLIST或者通过tcpdump抓取的MySQL协议数据来进行分析。可以把分析结果输出到文件中，分析过程是先对查询语句的条件进行参数化，然后对参数化以后的查询进行分组统计，统计出各查询的执行时间、次数、占比等，可以借助分析结果找">
+pt系列(percona-toolkit)是一组高级命令行工具的集合，用来执行各种通过手工执行非常复杂和麻烦的mysql和系统任务。这些任务包括：
+检查master和slave数据的一致性
+有效地对记录进行归档
+查找重复的索引
+对服务器信息进行汇总
+分析来自日志和tcpdump的查询
+当系统出问题的时候收集重要的系统信息
+
+
+pt-query-digest是用于分析mysql慢查询的一个">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用pt-query-digest分析mysql慢日志">
 <meta property="og:url" content="http://chuanblog91.com/2017/04/20/使用pt-query-digest分析mysql慢日志/index.html">
 <meta property="og:site_name" content="Chuan's Blog">
 <meta property="og:description" content="工具介绍
-pt-query-digest是用于分析mysql慢查询的一个工具，它可以分析binlog、General log、slowlog，也可以通过SHOWPROCESSLIST或者通过tcpdump抓取的MySQL协议数据来进行分析。可以把分析结果输出到文件中，分析过程是先对查询语句的条件进行参数化，然后对参数化以后的查询进行分组统计，统计出各查询的执行时间、次数、占比等，可以借助分析结果找">
-<meta property="og:updated_time" content="2017-04-20T10:00:27.702Z">
+pt系列(percona-toolkit)是一组高级命令行工具的集合，用来执行各种通过手工执行非常复杂和麻烦的mysql和系统任务。这些任务包括：
+检查master和slave数据的一致性
+有效地对记录进行归档
+查找重复的索引
+对服务器信息进行汇总
+分析来自日志和tcpdump的查询
+当系统出问题的时候收集重要的系统信息
+
+
+pt-query-digest是用于分析mysql慢查询的一个">
+<meta property="og:updated_time" content="2017-04-21T03:56:42.092Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用pt-query-digest分析mysql慢日志">
 <meta name="twitter:description" content="工具介绍
-pt-query-digest是用于分析mysql慢查询的一个工具，它可以分析binlog、General log、slowlog，也可以通过SHOWPROCESSLIST或者通过tcpdump抓取的MySQL协议数据来进行分析。可以把分析结果输出到文件中，分析过程是先对查询语句的条件进行参数化，然后对参数化以后的查询进行分组统计，统计出各查询的执行时间、次数、占比等，可以借助分析结果找">
+pt系列(percona-toolkit)是一组高级命令行工具的集合，用来执行各种通过手工执行非常复杂和麻烦的mysql和系统任务。这些任务包括：
+检查master和slave数据的一致性
+有效地对记录进行归档
+查找重复的索引
+对服务器信息进行汇总
+分析来自日志和tcpdump的查询
+当系统出问题的时候收集重要的系统信息
+
+
+pt-query-digest是用于分析mysql慢查询的一个">
 
 
 
@@ -347,9 +374,26 @@ pt-query-digest是用于分析mysql慢查询的一个工具，它可以分析bin
 
       
         <h4 id="工具介绍"><a href="#工具介绍" class="headerlink" title="工具介绍"></a>工具介绍</h4><ul>
+<li>pt系列(percona-toolkit)是一组高级命令行工具的集合，用来执行各种通过手工执行非常复杂和麻烦的mysql和系统任务。这些任务包括：<ul>
+<li>检查master和slave数据的一致性</li>
+<li>有效地对记录进行归档</li>
+<li>查找重复的索引</li>
+<li>对服务器信息进行汇总</li>
+<li>分析来自日志和tcpdump的查询</li>
+<li>当系统出问题的时候收集重要的系统信息</li>
+</ul>
+</li>
 <li>pt-query-digest是用于分析mysql慢查询的一个工具，它可以分析binlog、General log、slowlog，也可以通过SHOWPROCESSLIST或者通过tcpdump抓取的MySQL协议数据来进行分析。可以把分析结果输出到文件中，分析过程是先对查询语句的条件进行参数化，然后对参数化以后的查询进行分组统计，统计出各查询的执行时间、次数、占比等，可以借助分析结果找出问题进行优化。</li>
 </ul>
 <h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><ul>
+<li><p>安装percona-toolkit非常简单，到官网下载.tar.gz包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget percona.com/get/percona-toolkit.tar.gz</div><div class="line">tar -zxvf percona-toolkit-2.2.20.tar.gz</div></pre></td></tr></table></figure>
+<p>然后依次执行下面的命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">perl Makefile.PL</div><div class="line">make</div><div class="line">make <span class="built_in">test</span></div><div class="line">make install</div></pre></td></tr></table></figure>
+<p>默认的会被安装在/usr/local/bin目录下。执行man percona-toolkit可以查看安装了哪些工具。<br>如果安装过程中遇到错误有可能是因为缺少相应包，.pm包实际上perl的包，运行下面的命令安装即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install -y perl-Time-HiRes</div></pre></td></tr></table></figure>
+<p>如果安装过程中出现” Error Downloading Packages”错误，尝试yum clean all后再安装。使用其Percona Toolkit中其他工具也可能会遇到类似的问题，按照提示安装相应的perl包就可以了。s</p>
+<h5 id="如果单独安装pt-query-digest"><a href="#如果单独安装pt-query-digest" class="headerlink" title="如果单独安装pt-query-digest"></a>如果单独安装pt-query-digest</h5></li>
 <li>pt-query-digest是一个perl脚本，只需下载并赋权即可执行。<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[root@<span class="built_in">test</span>1 ]<span class="comment"># wget percona.com/get/pt-query-digest </span></div><div class="line">[root@<span class="built_in">test</span>1 ]<span class="comment"># chmod u+x pt-query-digest</span></div></pre></td></tr></table></figure>
 </li>
 </ul>
@@ -572,7 +616,7 @@ pt-query-digest是用于分析mysql慢查询的一个工具，它可以分析bin
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#工具介绍"><span class="nav-number">1.</span> <span class="nav-text">工具介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#语法及重要选项"><span class="nav-number">3.</span> <span class="nav-text">语法及重要选项`</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准分析报告解释"><span class="nav-number">4.</span> <span class="nav-text">标准分析报告解释</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#工具介绍"><span class="nav-number">1.</span> <span class="nav-text">工具介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如果单独安装pt-query-digest"><span class="nav-number">2.1.</span> <span class="nav-text">如果单独安装pt-query-digest</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#语法及重要选项"><span class="nav-number">3.</span> <span class="nav-text">语法及重要选项`</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标准分析报告解释"><span class="nav-number">4.</span> <span class="nav-text">标准分析报告解释</span></a></li></ol></div>
             
 
           </div>
