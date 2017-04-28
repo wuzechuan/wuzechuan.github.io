@@ -247,6 +247,160 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://chuanblog91.com/2017/03/23/app自动化编译及持续集成（二）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuzechuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/03/23/app自动化编译及持续集成（二）/" itemprop="url">
+                  app自动化编译及持续集成（二）
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-23T18:53:14+08:00">
+                2017-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术水文/" itemprop="url" rel="index">
+                    <span itemprop="name">技术水文</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="ios打包及部署命令"><a href="#ios打包及部署命令" class="headerlink" title="ios打包及部署命令"></a>ios打包及部署命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer</div><div class="line"></div><div class="line">xcodebuild archive -workspace <span class="variable">$&#123;WORKSPACE&#125;</span>/xxxx/xxxx.xcworkspace -scheme xxxx -archivePath <span class="variable">$&#123;WORKSPACE&#125;</span>/output/xxxx</div><div class="line"><span class="variable">$&#123;WORKSPACE&#125;</span>/../shell/dir.sh <span class="variable">$&#123;WORKSPACE&#125;</span>/outputIPA</div><div class="line"></div><div class="line">xcodebuild -exportArchive -exportPath <span class="variable">$&#123;WORKSPACE&#125;</span>/outputIPA/xxxx_<span class="variable">$&#123;BUILD_NUMBER&#125;</span>.ipa -exportFormat ipa -archivePath <span class="variable">$&#123;WORKSPACE&#125;</span>/output/xxxx.xcarchive -exportProvisioningProfile <span class="string">"iOS Team Provisioning Profile: *"</span></div><div class="line"></div><div class="line">\cp -fr <span class="variable">$&#123;WORKSPACE&#125;</span>/outputIPA/xxxx_<span class="variable">$&#123;BUILD_NUMBER&#125;</span>.ipa <span class="variable">$&#123;WORKSPACE&#125;</span>/outputIPA/xxxx.ipa</div></pre></td></tr></table></figure>
+<ul>
+<li>指定Xcode版本（最新代码需用xcode8编译）</li>
+<li>编译xxxx的代码，生成xcarchive文件</li>
+<li>在工程根目录下新建一个ouputIPA文件夹</li>
+<li>对xccharive进行代码签名和打包，生成对应的ipa文件，名称为xxxx_buildnumber，<br>其中buildnumber为构建编号，以区分每一次构建的包</li>
+<li>把ipa文件拷贝到outIPA下，并重命名为xxxx.ipa</li>
+<li><p>把xxxx.ipa上传（可将这一步抽出，单独建立一个任务）</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/23/app自动化编译及持续集成（二）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://chuanblog91.com/2017/03/23/app自动化编译及持续集成（一）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -738,7 +892,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
