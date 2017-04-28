@@ -105,7 +105,7 @@ Celery 是一个由 Python 编写的简单、灵活、可靠的用来处理大�
 Brokers
 
 brokers 中文意思为中间人，在这里">
-<meta property="og:updated_time" content="2017-04-28T08:42:53.858Z">
+<meta property="og:updated_time" content="2017-04-28T08:44:24.894Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="celery在Djdngo中的应用">
 <meta name="twitter:description" content="celery介绍
@@ -385,11 +385,11 @@ brokers 中文意思为中间人，在这里">
 <li><p>Tasks</p>
 <ul>
 <li>就是我们想在队列中进行的任务咯，一般由用户、触发器或其他操作将任务入队，然后交由 workers 进行处理。<a id="more"></a>
-<h3 id="celery安装"><a href="#celery安装" class="headerlink" title="celery安装"></a>celery安装</h3>pyhon 环境是必须的<br>Celery 依赖于erlang，所以需要安装erlang。<br>Celery 需要消息队列配合使用，RabbitMQ， Redis都可以，以下在<strong>unbuntu</strong>中操作的命令。<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">apt-get install erlang  </div><div class="line">apt-get install rabbitmq-server  </div><div class="line">pip install celery  </div><div class="line">apt-get install sqlite  </div><div class="line">pip install sqlalchemy</div></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 </ul>
+<h3 id="celery安装"><a href="#celery安装" class="headerlink" title="celery安装"></a>celery安装</h3><p>pyhon 环境是必须的<br>Celery 依赖于erlang，所以需要安装erlang。<br>Celery 需要消息队列配合使用，RabbitMQ， Redis都可以，以下在<strong>unbuntu</strong>中操作的命令。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">apt-get install erlang  </div><div class="line">apt-get install rabbitmq-server  </div><div class="line">pip install celery  </div><div class="line">apt-get install sqlite  </div><div class="line">pip install sqlalchemy</div></pre></td></tr></table></figure></p>
 <p>其中，rabbitmq为我们选用的消息队列工具，sqlite为db，sqlalchemy为Python的ORM框架<br><strong>如果是使用的django 需要安装 django-celery</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install django-celery</div></pre></td></tr></table></figure></p>
 <p>Worker 需要额外安装task执行的时候的需要包，比如，requests</p>
 <p>Flower 是celery的监控工具<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install flower</div></pre></td></tr></table></figure></p>
