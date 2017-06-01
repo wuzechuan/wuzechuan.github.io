@@ -257,6 +257,157 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://chuanblog91.com/2017/06/01/通过python编码生成RobotFramework类/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuzechuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/06/01/通过python编码生成RobotFramework类/" itemprop="url">
+                  通过python编码生成RobotFramework类
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-01T08:52:35+08:00">
+                2017-06-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/技术水文/" itemprop="url" rel="index">
+                    <span itemprop="name">技术水文</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <ul>
+<li>在此记录下之前开发web版ride的过程中，遇到了python执行robot脚本的问题。<h3 id="直接创建TestSuit类"><a href="#直接创建TestSuit类" class="headerlink" title="直接创建TestSuit类"></a>直接创建TestSuit类</h3></li>
+<li>通过python脚本生成Robot Framework 里面的TestSuite，并执行以下逻辑：  <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> robot.api <span class="keyword">import</span> TestSuite  </div><div class="line">ts = TestSuite(<span class="string">'test'</span>)  </div><div class="line">ts.resource.imports.library(<span class="string">'Selenium2Library'</span>)  </div><div class="line">ts.resource.imports.resource(<span class="string">'d:/temp/flows.robot'</span>)  </div><div class="line">tc = ts.tests.create(<span class="string">'case'</span>)  </div><div class="line">tc.keywords.create(<span class="string">'Open Browser'</span>, args=[<span class="string">u'url=http://www.baidu.com'</span>, <span class="string">u'browser=gc'</span>])  </div><div class="line">tc.keywords.create(<span class="string">'Go to'</span>, args=[<span class="string">u'url=http://tieba.baidu.com'</span>])  </div><div class="line">tc.keywords.create(<span class="string">u'\u5546\u54c1\u8be6\u60c5\u9875\u968f\u673a\u9009\u62e9\u5546\u54c1'</span>, args=[])  </div><div class="line">ts.run()</div></pre></td></tr></table></figure>
+</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/06/01/通过python编码生成RobotFramework类/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://chuanblog91.com/2017/05/31/利用locust和multi-mechanize-针对flask服务做压力测试/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1541,163 +1692,6 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://chuanblog91.com/2017/03/28/支付mock笔记（二）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wuzechuan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/1.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chuan's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/28/支付mock笔记（二）/" itemprop="url">
-                  支付mock笔记（二）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-28T10:25:07+08:00">
-                2017-03-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术水文/" itemprop="url" rel="index">
-                    <span itemprop="name">技术水文</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="修改alipay源码（以修改php文件为例，app端）"><a href="#修改alipay源码（以修改php文件为例，app端）" class="headerlink" title="修改alipay源码（以修改php文件为例，app端）"></a>修改alipay源码（以修改php文件为例，app端）</h3><ul>
-<li><p>修改xxxxcom/ThinkPHP/Extend/Vendor/SdkAlipay/alipay_notify.class.php 文件</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function verifyNotify()</div><div class="line">注释（//$isSign = $this-&gt;getSignVeryfy($_POST, $_POST["sign"]);）</div><div class="line">添加 $isSign = true;</div><div class="line">注释（ //if (! empty($_POST["notify_id"])) &#123;$responseTxt = $this-&gt;getResponse($_POST["notify_id"]);&#125;）</div><div class="line"></div><div class="line">function verifyReturn()</div><div class="line">注释（//$isSign = $this-&gt;getSignVeryfy($_REQUEST, $_REQUEST["sign"]);）</div><div class="line">添加 $isSign = true;</div><div class="line">注释（ //if (! empty($_POST["notify_id"])) &#123;$responseTxt = $this-&gt;getResponse($_POST["notify_id"]);&#125;）</div></pre></td></tr></table></figure>
-</li>
-<li><p>修改xxxxcom/Gate/handler/AliPayApp/PayHandler.class.php</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function verifyReturn()</div><div class="line">        //判断验证是否通过和合法</div><div class="line">注释        $is_from_alipay = file_get_contents("https://mapi.alipay.com/gateway.do?service=notify_verify&amp;partner=" . $config['partner'] . "&amp;notify_id=" . $_POST['notif</div><div class="line">y_id']);</div><div class="line">添加        $is_from_alipay = 'true';</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">com/Conf/config.php add <span class="string">'GATEWAY_USER_AGENT'</span>=&gt; <span class="string">'wushi'</span>,</div><div class="line">rm -rf /xxxcom/Runtime/*</div></pre></td></tr></table></figure>
-<ul>
-<li>配置host<br>192.168.149.34 mapi.alipay.com
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/03/28/支付mock笔记（二）/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://chuanblog91.com/2017/03/28/支付mock笔记（一）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1885,7 +1879,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1907,7 +1901,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
