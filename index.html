@@ -257,6 +257,167 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://chuanblog91.com/2017/07/14/adb命令获取app端性能参数-Android/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="wuzechuan">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/1.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chuan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/07/14/adb命令获取app端性能参数-Android/" itemprop="url">
+                  adb命令获取app端性能参数(Android)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-14T14:46:17+08:00">
+                2017-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <ul>
+<li>最近在钻研手机端的专项测试，总结了一些内容；<h3 id="工具收集："><a href="#工具收集：" class="headerlink" title="工具收集："></a>工具收集：</h3></li>
+<li>appcrawler：类似monkey的自动化遍历app爬虫工具<br>github地址<a href="https://github.com/seveniruby/AppCrawler">https://github.com/seveniruby/AppCrawler</a> ；<ul>
+<li>自动化探索性测试并获取加载时间和性能数据，需要借助一些工具</li>
+<li>支持ios和Android</li>
+<li>命令行执行</li>
+<li>支持自定义断言判断app是否崩溃</li>
+<li>支持阿里开源ui自动化框架macaca</li>
+<li>新老版本对比</li>
+</ul>
+</li>
+<li>leakcanary：Android的高效率发现大部分内存泄漏导致的OOM<ul>
+<li>开源的，基于java语言，github地址<a href="https://github.com/square/leakcanary">https://github.com/square/leakcanary</a><br>中文说明：<a href="https://www.liaohuqiu.net/cn/posts/leak-canary-read-me/">https://www.liaohuqiu.net/cn/posts/leak-canary-read-me/</a> <ul>
+<li>可在appcrawler集成</li>
+<li><a href="https://testerhome.com/topics/6022（在Jenkins上的实战帖）">https://testerhome.com/topics/6022（在Jenkins上的实战帖）</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>MLeaksFinder：ios版自动内存泄漏检测工具<ul>
+<li>开源的，基于object-c语言<br>github地址 <a href="https://github.com/Zepo/MLeaksFinder">https://github.com/Zepo/MLeaksFinder</a><br>中文说明：<a href="https://wereadteam.github.io/2016/07/20/MLeaksFinder2">https://wereadteam.github.io/2016/07/20/MLeaksFinder2</a></li>
+<li>可在appcrawler集成</li>
+</ul>
+</li>
+<li>BlockCanaryEx：记录Android卡顿日志<ul>
+<li>开源的，基于BlockCanary项目<br>github地址 <a href="https://github.com/seiginonakama/BlockCanaryEx">https://github.com/seiginonakama/BlockCanaryEx</a><br>中文说明：<br><a href="https://github.com/seiginonakama/BlockCanaryEx/blob/master/README_ZH.md">https://github.com/seiginonakama/BlockCanaryEx/blob/master/README_ZH.md</a></li>
+<li>卡顿的时候侧重于关注app的代码，哪些方法耗时最多，重点记录和在ui显示出来</li>
+<li>gc采样，卡顿的时候关注gc是否出现问题</li>
+<li>需要在app代码内注入</li>
+</ul>
+</li>
+<li>腾讯gt：直接运行在手机，抓取性能参数<ul>
+<li>支持ios（需要嵌入工程）和Android（由app和sdk组成，GT控制台可以独立安装使用，SDK需嵌入被调测的应用、并利用GT控制台进行信息展示和参数修改）</li>
+<li>github地址：<a href="https://github.com/Tencent/GT">https://github.com/Tencent/GT</a></li>
+</ul>
+</li>
+<li>adb shell命令
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/14/adb命令获取app端性能参数-Android/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://chuanblog91.com/2017/07/14/python-正确保留多位小数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1681,156 +1842,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://chuanblog91.com/2017/04/11/【django】解决migrations没有修改表的问题记录/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="wuzechuan">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/1.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Chuan's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/04/11/【django】解决migrations没有修改表的问题记录/" itemprop="url">
-                  【django】解决migrations没有修改表的问题记录
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-11T10:40:16+08:00">
-                2017-04-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/技术水文/" itemprop="url" rel="index">
-                    <span itemprop="name">技术水文</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="问题情况"><a href="#问题情况" class="headerlink" title="问题情况"></a>问题情况</h3><ul>
-<li>在进行django开发的时候，遇到这样的情况，在models文件进行了新增表或修改表，删除了migrations，再生成新的migrations后进行migrate，会出现以下提示：<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Operations to perform:</div><div class="line">  Apply all migrations: admin, auth, contenttypes, interface, sessions, usermana</div><div class="line">ge</div><div class="line">Running migrations:</div><div class="line">  No migrations to apply.</div></pre></td></tr></table></figure>
-</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/04/11/【django】解决migrations没有修改表的问题记录/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1880,7 +1891,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-count">19</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1902,7 +1913,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
