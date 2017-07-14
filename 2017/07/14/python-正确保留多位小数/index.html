@@ -93,7 +93,7 @@
 <meta property="og:url" content="http://chuanblog91.com/2017/07/14/python-正确保留多位小数/index.html">
 <meta property="og:site_name" content="Chuan's Blog">
 <meta property="og:description" content="python自带的float函数在保留两位小数的时候不够准确容易出现误差，而(‘%.2f’ % a)的方式是将数字转成了字符串类型，无法进行数字运算，所以这里我们将封装一个方法来实现正确的保留多位小数。">
-<meta property="og:updated_time" content="2017-07-14T03:32:23.802Z">
+<meta property="og:updated_time" content="2017-07-14T03:46:42.364Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python-正确保留多位小数">
 <meta name="twitter:description" content="python自带的float函数在保留两位小数的时候不够准确容易出现误差，而(‘%.2f’ % a)的方式是将数字转成了字符串类型，无法进行数字运算，所以这里我们将封装一个方法来实现正确的保留多位小数。">
@@ -364,7 +364,7 @@
 <li>char2int函数实现左侧的数字乘以10后加上右侧数字，比如char2int（1,2）-&gt; 12；</li>
 <li>tstr是将高位数和低位数通过”.”隔开；</li>
 <li>hightre是处理高位数，即非小数位部分，tstr[0]将左侧的数字通过char2num函数转成数字类型，作为单个单个的数字，如（”123.456”）将小数点左侧的部分转为（1,2,3），通过char2int函数转为(((1<em>10+2)</em>10)+3) -&gt; 123；</li>
-<li>lowre是处理低位数，即小数位部分，tstr[1]将右侧的数字通过char2num函数转成数字类型，作为单个单个的数字，如（”123.456”）将小数点右侧的部分转为（4,5,6），通过char2int函数转为(((4<em>10+5)</em>10)+6) -&gt; 456,由于是小数位所以要乘以0.1的N次方(N=小数位的位数)，(456<em>(0.1*</em>3)) -&gt; 0.456；</li>
+<li>lowre是处理低位数，即小数位部分，tstr[1]将右侧的数字通过char2num函数转成数字类型，作为单个单个的数字，如（”123.456”）将小数点右侧的部分转为（4,5,6），通过char2int函数转为(((4<em>10+5)</em>10)+6) -&gt; 456,由于是小数位所以要乘以0.1的N次方(N=小数位的位数)，(456<em>(0.1</em>0.1*0.1)) -&gt; 0.456；</li>
 <li><p>最后返回高位数拼接低位数，即123.456的浮点类型；</p>
 </li>
 <li><p>PS：经过试验发现，使用该方法最多可支持12位数字，即高位数和低位数总位数在12位以内可以正常显示；</p>
